@@ -14,9 +14,38 @@ import {
   FieldError,
 } from "@heroui/react";
 import { Envelope, Person, ArrowRight, Eye, EyeSlash } from "@gravity-ui/icons";
+import { authClient } from "@/lib/auth-client";
+
+const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API;
+
+// Uploads a File to ImgBB → returns hosted URL
+async function uploadToImgBB(file) {
+  const base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const form = new FormData();
+  form.append("key", IMGBB_API_KEY);
+  form.append("image", base64);
+
+  const res = await fetch("https://api.imgbb.com/1/upload", {
+    method: "POST",
+    body: form,
+  });
+
+  const json = await res.json();
+  if (!json.success)
+    throw new Error(json.error?.message ?? "ImgBB upload failed");
+  return json.data.url;
+}
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [avatar, setAvatar] = useState(null); // { file, preview }
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     role: "user",
     name: "",
@@ -24,18 +53,68 @@ export default function SignUpPage() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Sign Up Data:", formData);
-    // TODO: connect to your auth API here
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatar({ file, preview: URL.createObjectURL(file) });
   };
+
+  const removeImage = () => {
+    if (avatar?.preview) URL.revokeObjectURL(avatar.preview);
+    setAvatar(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUploading(true);
+    try {
+      // 1. Upload image to ImgBB first → get a URL string
+      let imageUrl = undefined;
+      if (avatar?.file) {
+        imageUrl = await uploadToImgBB(avatar.file);
+      }
+
+      // 2. Sign up — pass role via fetchOptions headers so Better Auth
+      //    receives it as extra data and saves it to the user record
+      const { data, error } = await authClient.signUp.email(
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          image: imageUrl, // ✅ proper https:// URL from ImgBB
+          role: formData.role, // ✅ passed as top-level field
+          callbackURL: "/dashboard",
+        },
+        {
+          // Better Auth also accepts extra fields via onRequest if needed
+          onSuccess: (ctx) => {
+            console.log("Sign up success:", ctx);
+          },
+          onError: (ctx) => {
+            console.error("Sign up error:", ctx.error.message);
+          },
+        },
+      );
+
+      if (error) console.error("Sign up error:", error);
+      else console.log("Sign up success:", data);
+    } catch (err) {
+      console.error("Error:", err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+  const handleGoogleSignUp=async()=>{
+    const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  }
 
   const update = (field) => (e) =>
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
 
   return (
     <div className="min-h-screen w-full bg-[#060709] flex items-center justify-center px-4 font-sans selection:bg-[#00E5FF]/30 relative overflow-hidden">
-
       {/* Ambient glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00E5FF]/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-purple-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
@@ -59,7 +138,7 @@ export default function SignUpPage() {
             />
           </div>
           <span className="text-white font-black tracking-widest text-sm uppercase">
-            Young<span className="text-[#00E5FF]">Man</span>
+            Yong<span className="text-[#00E5FF]">Man</span>
           </span>
         </div>
 
@@ -77,7 +156,6 @@ export default function SignUpPage() {
         <Form onSubmit={handleSubmit}>
           <Fieldset>
             <Fieldset.Group className="space-y-5">
-
               {/* Role Selector */}
               <div>
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
@@ -93,7 +171,9 @@ export default function SignUpPage() {
                       <label
                         key={value}
                         className={`flex items-center gap-2.5 p-3 rounded-xl bg-[#0F111A] border cursor-pointer transition-all ${
-                          selected ? "border-[#00E5FF]" : "border-[#1E2433] hover:border-gray-600"
+                          selected
+                            ? "border-[#00E5FF]"
+                            : "border-[#1E2433] hover:border-gray-600"
                         }`}
                       >
                         <input
@@ -106,7 +186,6 @@ export default function SignUpPage() {
                           }
                           className="sr-only"
                         />
-                        {/* Custom radio circle */}
                         <span
                           className={`h-4 w-4 rounded-full border flex items-center justify-center shrink-0 transition-all ${
                             selected ? "border-[#00E5FF]" : "border-gray-600"
@@ -129,13 +208,79 @@ export default function SignUpPage() {
                 </div>
               </div>
 
+              {/* Profile Photo */}
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                  Profile Photo
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="h-16 w-16 rounded-full bg-[#0F111A] border-2 border-dashed border-[#1E2433] flex items-center justify-center shrink-0 overflow-hidden">
+                    {avatar ? (
+                      <img
+                        src={avatar.preview}
+                        alt="Preview"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Person className="text-gray-600" width={24} />
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-2 flex-1">
+                    <label className="cursor-pointer w-full h-10 rounded-xl bg-[#0F111A] border border-[#1E2433] hover:border-[#00E5FF] flex items-center justify-center gap-2 transition-all group">
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg, image/webp"
+                        onChange={handleImageChange}
+                        className="sr-only"
+                      />
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-gray-500 group-hover:text-[#00E5FF] transition-colors"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                      <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-white transition-colors">
+                        {avatar ? "Change Photo" : "Upload Photo"}
+                      </span>
+                    </label>
+
+                    {avatar && (
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="w-full h-8 rounded-xl bg-transparent border border-[#1E2433] hover:border-red-500/50 text-gray-600 hover:text-red-400 text-[11px] font-bold uppercase tracking-wider transition-all"
+                      >
+                        Remove
+                      </button>
+                    )}
+
+                    <p className="text-[10px] text-gray-600">
+                      PNG, JPG or WEBP · Max 2MB
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Full Name */}
               <TextField className="w-full space-y-1.5">
                 <Label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
                   Full Name
                 </Label>
                 <div className="relative flex items-center">
-                  <Person className="absolute left-3.5 text-gray-500" width={16} />
+                  <Person
+                    className="absolute left-3.5 text-gray-500"
+                    width={16}
+                  />
                   <Input
                     type="text"
                     required
@@ -154,7 +299,10 @@ export default function SignUpPage() {
                   Email Address
                 </Label>
                 <div className="relative flex items-center">
-                  <Envelope className="absolute left-3.5 text-gray-500" width={16} />
+                  <Envelope
+                    className="absolute left-3.5 text-gray-500"
+                    width={16}
+                  />
                   <Input
                     type="email"
                     required
@@ -173,7 +321,10 @@ export default function SignUpPage() {
                   Password
                 </Label>
                 <div className="relative flex items-center">
-                  <Person className="absolute left-3.5 text-gray-500" width={16} />
+                  <Person
+                    className="absolute left-3.5 text-gray-500"
+                    width={16}
+                  />
                   <Input
                     type={showPassword ? "text" : "password"}
                     required
@@ -187,7 +338,11 @@ export default function SignUpPage() {
                     onClick={() => setShowPassword((v) => !v)}
                     className="absolute right-3.5 text-gray-500 hover:text-gray-300 transition-colors"
                   >
-                    {showPassword ? <EyeSlash width={16} /> : <Eye width={16} />}
+                    {showPassword ? (
+                      <EyeSlash width={16} />
+                    ) : (
+                      <Eye width={16} />
+                    )}
                   </button>
                 </div>
                 <Description className="text-[11px] text-gray-600">
@@ -195,21 +350,29 @@ export default function SignUpPage() {
                 </Description>
                 <FieldError className="text-xs text-red-400 mt-1" />
               </TextField>
-
             </Fieldset.Group>
 
             {/* Actions */}
             <Fieldset.Actions className="pt-6 flex flex-col gap-3">
               <Button
                 type="submit"
-                endContent={<ArrowRight width={14} />}
-                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#00E5FF] to-[#00B0FF] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all"
+                isDisabled={uploading}
+                endContent={!uploading && <ArrowRight width={14} />}
+                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#00E5FF] to-[#00B0FF] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Create Account
+                {uploading ? "Uploading..." : "Create Account"}
               </Button>
               <Button
                 type="reset"
-                onPress={() => setFormData({ role: "user", name: "", email: "", password: "" })}
+                onPress={() => {
+                  setFormData({
+                    role: "user",
+                    name: "",
+                    email: "",
+                    password: "",
+                  });
+                  removeImage();
+                }}
                 className="w-full h-11 rounded-xl bg-transparent border border-[#1E2433] hover:bg-[#121520] text-gray-400 hover:text-white font-bold tracking-wider text-xs uppercase transition-colors"
               >
                 Clear
@@ -218,22 +381,43 @@ export default function SignUpPage() {
               {/* Divider */}
               <div className="flex items-center gap-3 py-1">
                 <span className="flex-1 h-px bg-[#1E2433]" />
-                <span className="text-[11px] text-gray-600 uppercase tracking-widest">or</span>
+                <span className="text-[11px] text-gray-600 uppercase tracking-widest">
+                  or
+                </span>
                 <span className="flex-1 h-px bg-[#1E2433]" />
               </div>
 
               {/* Google Button */}
               <button
                 type="button"
-                onClick={() => console.log("Google Sign Up")}
+                onClick={
+                  handleGoogleSignUp
+                }
                 className="w-full h-11 rounded-xl bg-[#0F111A] border border-[#1E2433] hover:border-gray-600 hover:bg-[#13151F] flex items-center justify-center gap-3 transition-all group"
               >
-                {/* Google SVG Icon */}
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8196H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
-                  <path d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5614C11.2418 14.1014 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8373 3.96409 10.71H0.957275V13.0418C2.43818 15.9832 5.48182 18 9 18Z" fill="#34A853"/>
-                  <path d="M3.96409 10.71C3.78409 10.17 3.68182 9.59318 3.68182 9C3.68182 8.40682 3.78409 7.83 3.96409 7.29V4.95818H0.957275C0.347727 6.17318 0 7.54773 0 9C0 10.4523 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z" fill="#FBBC05"/>
-                  <path d="M9 3.57955C10.3214 3.57955 11.5077 4.03364 12.4405 4.92545L15.0218 2.34409C13.4632 0.891818 11.4259 0 9 0C5.48182 0 2.43818 2.01682 0.957275 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z" fill="#EA4335"/>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8196H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z"
+                    fill="#4285F4"
+                  />
+                  <path
+                    d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5614C11.2418 14.1014 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8373 3.96409 10.71H0.957275V13.0418C2.43818 15.9832 5.48182 18 9 18Z"
+                    fill="#34A853"
+                  />
+                  <path
+                    d="M3.96409 10.71C3.78409 10.17 3.68182 9.59318 3.68182 9C3.68182 8.40682 3.78409 7.83 3.96409 7.29V4.95818H0.957275C0.347727 6.17318 0 7.54773 0 9C0 10.4523 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z"
+                    fill="#FBBC05"
+                  />
+                  <path
+                    d="M9 3.57955C10.3214 3.57955 11.5077 4.03364 12.4405 4.92545L15.0218 2.34409C13.4632 0.891818 11.4259 0 9 0C5.48182 0 2.43818 2.01682 0.957275 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z"
+                    fill="#EA4335"
+                  />
                 </svg>
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-400 group-hover:text-white transition-colors">
                   Continue with Google
@@ -246,7 +430,7 @@ export default function SignUpPage() {
         {/* Footer link */}
         <p className="text-xs text-center text-gray-500 mt-6">
           Already have an account?{" "}
-          <a href="/logIn" className="text-[#00E5FF] font-bold hover:underline">
+          <a href="/login" className="text-[#00E5FF] font-bold hover:underline">
             Sign in
           </a>
         </p>
