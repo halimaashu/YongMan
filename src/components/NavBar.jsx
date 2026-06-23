@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 
 // Gravity UI Icons Integration
 import { Bars, CircleXmarkFill, ArrowRightFromSquare, ArrowChevronRight } from '@gravity-ui/icons'; 
+import { authClient } from '@/lib/auth-client';
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -14,14 +15,18 @@ const NavBar = () => {
 
   // Authentication Context Placeholder Data
   // Replace these values later with: const { user, loading, logout } = useAuth();
-  const user = {
-    name: "Ashik",
-    email: "ashik@yongman.com",
-    role: "admin", // Options: "user" | "trainer" | "admin"
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80"
-  };
+  const { data: session } = authClient.useSession()
+  // const user = {
+  //   name: "Ashik",
+  //   email: "ashik@yongman.com",
+  //   role: "admin", // Options: "user" | "trainer" | "admin"
+  //   image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80"
+  // };
+  const user=session?.user
   const loading = false;
-  const logout = () => console.log("Logged out successfully");
+  const logout =async () => {
+    await authClient.signOut();
+  };
 
   const isActive = (path) => pathname === path;
 
@@ -112,7 +117,7 @@ const NavBar = () => {
               </div>
             ) : (
               <Link 
-                href="/login"
+                href="/logIn"
                 className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-bold uppercase tracking-wider rounded-lg group bg-gradient-to-br from-[#00E5FF] to-blue-600 text-white transition-all hover:shadow-[0_0_12px_rgba(0,229,255,0.3)]"
               >
                 <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-[#0A0B0E] rounded-md group-hover:bg-opacity-0">

@@ -13,6 +13,7 @@ import {
   FieldError,
 } from "@heroui/react";
 import { Envelope, Lock, ArrowRight, Eye, EyeSlash } from "@gravity-ui/icons";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,10 +22,16 @@ export default function LoginPage() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Login Data:", formData);
-    // TODO: connect to your auth API here
+    const {email,password}=formData
+    const { data, error } = await authClient.signIn.email({
+    email, // required
+    password, // required
+    rememberMe: true,
+    callbackURL: "/",
+});
   };
 
   const update = (field) => (e) =>
