@@ -48,7 +48,7 @@ const NavBar = () => {
               />
             </div>
             <h1 className="text-lg font-black tracking-widest text-white uppercase">
-              Yong<span className="text-[#00E5FF] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">Man</span>
+              Young<span className="text-[#00E5FF] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">Man</span>
             </h1>
           </Link>
 
