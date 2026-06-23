@@ -44,7 +44,7 @@ const HeroBanner = () => {
       >
         {/* Animated Badge */}
         <motion.div variants={itemVariants} className="inline-flex items-center">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-widest text-[#00E5FF] bg-[#00E5FF]/5 border border-[#00E5FF]/20 backdrop-blur-sm shadow-[0_0_15px_rgba(0,229,255,0.05)]">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[13px] uppercase font-black tracking-widest text-[#00E5FF] bg-[#00E5FF]/5 border border-[#00E5FF]/20 backdrop-blur-sm shadow-[0_0_15px_rgba(0,229,255,0.05)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
             👋 Inspiring Peak Performance
           </span>
@@ -53,7 +53,7 @@ const HeroBanner = () => {
         {/* Hero Headline (Updated with Gene Tunney quote) */}
         <motion.h2 
           variants={itemVariants}
-          className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight max-w-3xl mx-auto"
+          className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white leading-tight max-w-3xl mx-auto"
         >
           To enjoy the glow of <br className="hidden sm:inline" /> good health, 
           <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] via-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(0,229,255,0.25)]">
@@ -64,7 +64,7 @@ const HeroBanner = () => {
         {/* Hero Paragraph Subtitle */}
         <motion.p 
           variants={itemVariants}
-          className="max-w-xl mx-auto text-sm sm:text-base text-gray-400 font-medium leading-relaxed tracking-wide italic"
+          className="max-w-lg mx-auto text-sm sm:text-base text-gray-400 font-medium leading-relaxed tracking-wide italic"
         >
           — Gene Tunney
         </motion.p>
