@@ -85,7 +85,7 @@ const Footer = () => {
                   height={34} 
                   width={34} 
                   alt="YongMan Platform Logo"
-                  className="drop-shadow-[0_0_6px_rgba(0,229,255,0.4)] transition-transform duration-300 group-hover:rotate-6"
+                  className=""
                 />
               </motion.div>
               <h2 className="text-base font-black tracking-widest text-white uppercase transition-all duration-300 group-hover:tracking-[0.2em]">

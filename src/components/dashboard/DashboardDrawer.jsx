@@ -82,11 +82,11 @@ export function DashboardDrawer() {
               onClick={() => sidebarDrawerState.close()} // Auto-closes mobile drawer on navigation click
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 relative group ${
                 isActive
-                  ? "bg-primary text-black font-semibold shadow-lg shadow-primary/20"
+                  ? "bg-primary text-[#00E5FF] font-semibold shadow-lg shadow-primary/20"
                   : "text-default-600 hover:bg-content2 hover:text-foreground"
               }`}
             >
-              <item.icon className={`size-5 transition-transform group-hover:scale-105 ${isActive ? "text-black" : "text-primary"}`} />
+              <item.icon className={`size-5 transition-transform group-hover:scale-105 ${isActive ? "text-[#00E5FF]" : "text-primary"}`} />
               <span>{item.label}</span>
               
               {isActive && (

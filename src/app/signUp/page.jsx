@@ -12,9 +12,11 @@ import {
   Input,
   Description,
   FieldError,
+  
 } from "@heroui/react";
 import { Envelope, Person, ArrowRight, Eye, EyeSlash } from "@gravity-ui/icons";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API;
 
@@ -89,9 +91,11 @@ export default function SignUpPage() {
           // Better Auth also accepts extra fields via onRequest if needed
           onSuccess: (ctx) => {
             console.log("Sign up success:", ctx);
+            toast.success("Sign Up success")
           },
           onError: (ctx) => {
             console.error("Sign up error:", ctx.error.message);
+            toast.Error(`Sign Up Fail for:${ctx.error.message}`)
           },
         },
       );
@@ -134,7 +138,7 @@ export default function SignUpPage() {
               height={32}
               width={32}
               alt="YongMan Logo"
-              className="drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]"
+              className=""
             />
           </div>
           <span className="text-white font-black tracking-widest text-sm uppercase">

@@ -13,16 +13,11 @@ const NavBar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Authentication Context Placeholder Data
-  // Replace these values later with: const { user, loading, logout } = useAuth();
+  
   const { data: session } = authClient.useSession()
-  // const user = {
-  //   name: "Ashik",
-  //   email: "ashik@yongman.com",
-  //   role: "admin", // Options: "user" | "trainer" | "admin"
-  //   image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80"
-  // };
+
   const user=session?.user
+ 
   const loading = false;
   const logout =async () => {
     await authClient.signOut();
@@ -49,7 +44,7 @@ const NavBar = () => {
                 height={38} 
                 width={38} 
                 alt="YongMan Platform Logo"
-                className="drop-shadow-[0_0_6px_rgba(0,229,255,0.4)]"
+                className="h-auto w-auto"
               />
             </div>
             <h1 className="text-lg font-black tracking-widest text-white uppercase">
@@ -95,10 +90,10 @@ const NavBar = () => {
             ) : user ? (
               <div className="flex items-center gap-3 bg-[#161A23] pl-2 pr-3 py-1 rounded-full border border-gray-800/60">
                 <div className="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-[#00E5FF]/70">
-                  <Image 
+                  <img 
                     src={user.image} 
                     alt={`${user.name}'s profile avatar`} 
-                    fill 
+                  
                     className="object-cover"
                   />
                 </div>
