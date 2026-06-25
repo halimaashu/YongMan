@@ -5,6 +5,7 @@ import { Card } from "@heroui/react";
 // Importing Gravity UI Icons
 import { Calendar, Clock, Layers, Flame,CircleDollar } from '@gravity-ui/icons';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function GymClassCard({classData}) {
   // Your data object
@@ -92,12 +93,13 @@ export default function GymClassCard({classData}) {
 
       {/* 3. CARD FOOTER */}
       <Card.Footer className="px-5 pb-5 pt-2">
-        <button 
+        <Link
+        href={`/classes/${classData._id}`} 
           className="w-full bg-gradient-to-r from-[#00E5FF] to-violet-500 hover:from-[#00E5FF]0 hover:to-[#00E5FF] text-white font-bold rounded-xl py-3 shadow-lg shadow-orange-500/20 transition-all transform active:scale-98 cursor-pointer text-center text-sm"
-          onClick={() => alert(`Booking for ${classData.className}`)}
+          
         >
           View Detail
-        </button>
+        </Link>
       </Card.Footer>
     </Card>
   );

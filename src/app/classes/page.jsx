@@ -1,6 +1,7 @@
 import { getAllClass } from '@/lib/actions/api/class';
 import React from 'react';
 import DisplayClass from './DisplayClass';
+import { PaginationControlled } from '@/components/class/PaginationControlled';
 
 const page = async() => {
     const name="ashik";
@@ -9,6 +10,7 @@ const page = async() => {
     return (
         <div>
             <DisplayClass classs={classs} />
+            <PaginationControlled/>
         </div>
     );
 };
