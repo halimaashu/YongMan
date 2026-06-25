@@ -21,6 +21,7 @@ const itemVariants = {
 };
 
 export default function ClassDetail({ classDetail }) {
+    console.log(classDetail,"from my de-----------------")
   
   const handleBooking = () => {
     alert(`Booking initialized for ${classDetail.className}!`);
@@ -143,7 +144,13 @@ export default function ClassDetail({ classDetail }) {
 
             <Card.Footer className="p-6 pt-0 flex flex-col gap-2">
               {/* MUST HAVE: Book Now Button */}
-              <Button 
+              <form action={"/api/payment"} method='POST'>
+     
+              <input type='hidden' name="price" value={classDetail.price} readOnly />
+              <input type='hidden' name="title" value={classDetail.className} readOnly />
+              <input type='hidden' name="productId" value={classDetail._id} readOnly />
+                  <Button 
+                  type='submit'
                 color="primary" 
                 size="lg" 
                 className="w-full font-bold shadow-lg shadow-primary/20"
@@ -151,6 +158,8 @@ export default function ClassDetail({ classDetail }) {
               >
                 Book Now
               </Button>
+              </form>
+            
               <span className="text-center text-xs text-default-400 w-full mt-1">
                 Instant confirmation • Secure checkout
               </span>
