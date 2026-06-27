@@ -49,7 +49,7 @@ export default function MyPostForum({myPostForum}) {
                 <Card.Header className="flex flex-col gap-2 items-start p-5 pb-2">
                   <div className="flex items-center gap-3 w-full">
                     <img
-                      src={post.image}
+                      src={post.image ||post.authorName[0]}
                       alt={post.authorName}
                       className="w-10 h-10 rounded-full object-cover border border-default-300"
                     />

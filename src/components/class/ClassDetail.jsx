@@ -1,34 +1,53 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import { Card, Button, Chip } from "@heroui/react";
 import { motion } from "framer-motion";
-import { Clock, Calendar, Flame, Layers, CircleDollar } from '@gravity-ui/icons';
-import Image from 'next/image';
+import {
+  Clock,
+  Calendar,
+  Flame,
+  Layers,
+  CircleDollar,
+} from "@gravity-ui/icons";
+import Image from "next/image";
+import toast from "react-hot-toast";
+import { postFavoriteClass } from "@/lib/actions/favorite";
+import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 
 // Framer motion variants for clean staggered animations
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
+    transition: { staggerChildren: 0.15 },
+  },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 export default function ClassDetail({ classDetail }) {
-    console.log(classDetail,"from my de-----------------")
-  
-  const handleBooking = () => {
-    alert(`Booking initialized for ${classDetail.className}!`);
+  console.log(classDetail, "from my de-----------------");
+  const { data: session } = authClient.useSession()
+const user=session?.user
+if(!user){
+  return (<div className=" h-screen flex justify-center items-center"
+  >
+    <h1 className="text-2xl">to get this page detail you must need to <Link href={"/logIn"} className="text-blue-500 line">log in</Link> gor naw logIn pnage</h1>
+  </div>)
+}
+  const handleFavorite =async () => {
+    const postFavorite=postFavoriteClass({...classDetail,userId:user?.id})
+
+    toast.success(`Add Favorite initialized for ${classDetail.className}!`);
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="max-w-6xl mx-auto px-4 py-8"
       initial="hidden"
       animate="visible"
@@ -36,12 +55,13 @@ export default function ClassDetail({ classDetail }) {
     >
       {/* Main Responsive Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* Left/Main Content Column */}
         <div className="lg:col-span-2 space-y-6">
-          
           {/* Animated Image Wrapper */}
-          <motion.div variants={itemVariants} className="w-full h-[300px] md:h-[450px] relative overflow-hidden rounded-2xl shadow-md">
+          <motion.div
+            variants={itemVariants}
+            className="w-full h-[300px] md:h-[450px] relative overflow-hidden rounded-2xl shadow-md"
+          >
             <Image
               fill
               src={classDetail.imageUrl}
@@ -58,9 +78,11 @@ export default function ClassDetail({ classDetail }) {
               <Chip color="primary" variant="flat" className="capitalize">
                 {classDetail.category}
               </Chip>
-              <Chip 
-                color={classDetail.difficulty === 'beginner' ? 'success' : 'warning'} 
-                variant="dot" 
+              <Chip
+                color={
+                  classDetail.difficulty === "beginner" ? "success" : "warning"
+                }
+                variant="dot"
                 className="capitalize"
               >
                 {classDetail.difficulty}
@@ -76,15 +98,22 @@ export default function ClassDetail({ classDetail }) {
           {/* Description Section */}
           <motion.div variants={itemVariants} className="space-y-2">
             <h2 className="text-xl font-semibold">About this class</h2>
-            <p className="text-default-600 leading-relaxed">{classDetail.description}</p>
+            <p className="text-default-600 leading-relaxed">
+              {classDetail.description}
+            </p>
           </motion.div>
 
           <hr className="border-divider" />
 
           {/* Schedule Specs Grid */}
-          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 gap-4"
+          >
             <div className="flex items-center gap-3 p-3 bg-default-50 rounded-xl">
-              <span className="text-primary text-xl"><Clock className='text-green-600' /></span>
+              <span className="text-primary text-xl">
+                <Clock className="text-green-600" />
+              </span>
               <div>
                 <p className="text-xs text-default-400 font-medium">Duration</p>
                 <p className="text-sm font-semibold">{classDetail.duration}</p>
@@ -92,19 +121,27 @@ export default function ClassDetail({ classDetail }) {
             </div>
 
             <div className="flex items-center gap-3 p-3 bg-default-50 rounded-xl">
-              <span className="text-primary text-xl"><Flame  className='text-red-600'/></span>
+              <span className="text-primary text-xl">
+                <Flame className="text-red-600" />
+              </span>
               <div>
                 <p className="text-xs text-default-400 font-medium">Time</p>
-                <p className="text-sm font-semibold">{classDetail.scheduleTime} Class</p>
+                <p className="text-sm font-semibold">
+                  {classDetail.scheduleTime} Class
+                </p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 p-3 bg-default-50 rounded-xl col-span-2">
-              <span className="text-primary text-xl"><Calendar className='text-[#00E5FF]' /></span>
+              <span className="text-primary text-xl">
+                <Calendar className="text-[#00E5FF]" />
+              </span>
               <div>
-                <p className="text-xs text-default-400 font-medium">Days Available</p>
+                <p className="text-xs text-default-400 font-medium">
+                  Days Available
+                </p>
                 <p className="text-sm font-semibold capitalize">
-                  {classDetail.scheduleDays?.join(', ')}
+                  {classDetail.scheduleDays?.join(", ")}
                 </p>
               </div>
             </div>
@@ -137,36 +174,57 @@ export default function ClassDetail({ classDetail }) {
                 </div>
                 <div className="flex justify-between">
                   <span>Status</span>
-                  <span className="text-success font-medium capitalize">{classDetail.status}</span>
+                  <span className="text-success font-medium capitalize">
+                    {classDetail.status}
+                  </span>
                 </div>
               </div>
             </Card.Content>
 
             <Card.Footer className="p-6 pt-0 flex flex-col gap-2">
               {/* MUST HAVE: Book Now Button */}
-              <form action={"/api/payment"} method='POST'>
-     
-              <input type='hidden' name="price" value={classDetail.price} readOnly />
-              <input type='hidden' name="title" value={classDetail.className} readOnly />
-              <input type='hidden' name="productId" value={classDetail._id} readOnly />
-                  <Button 
-                  type='submit'
-                color="primary" 
-                size="lg" 
-                className="w-full font-bold shadow-lg shadow-primary/20"
-                onClick={handleBooking}
-              >
-                Book Now
-              </Button>
+              <form action={"/api/payment"} method="POST">
+                <input
+                  type="hidden"
+                  name="price"
+                  value={classDetail.price}
+                  readOnly
+                />
+                <input
+                  type="hidden"
+                  name="title"
+                  value={classDetail.className}
+                  readOnly
+                />
+                <input
+                  type="hidden"
+                  name="productId"
+                  value={classDetail._id}
+                  readOnly
+                />
+                <Button
+                  type="submit"
+                  color="primary"
+                  size="lg"
+                  className="w-full font-bold shadow-lg shadow-primary/20"
+                 
+                >
+                  Book Now
+                </Button>
+               
               </form>
-            
+               <Button
+                onClick={handleFavorite}
+                 className={"mt-3 "}>
+                  Add to favorite
+                </Button>
+
               <span className="text-center text-xs text-default-400 w-full mt-1">
                 Instant confirmation • Secure checkout
               </span>
             </Card.Footer>
           </Card>
         </motion.div>
-
       </div>
     </motion.div>
   );
