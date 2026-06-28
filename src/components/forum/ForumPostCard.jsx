@@ -1,90 +1,77 @@
 "use client";
 
-import React, { useState } from 'react';
 import { Card } from "@heroui/react";
-import { ThumbsUp, ThumbsDown } from '@gravity-ui/icons';
+import Link from "next/link";
 
-export default function ForumPostCard({ post, isAuthenticated, userId }) {
-    // Basic local state handling for instantaneous UI response
-    const [likes, setLikes] = useState(post.likesCount || 0);
-    const [dislikes, setDislikes] = useState(post.dislikesCount || 0);
-    const [userVote, setUserVote] = useState(post.userVoteType || null); // 'like', 'dislike', or null
+// Using simple SVG icons since you're using Gravity UI / modern minimal styles
+const CalendarIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+);
 
-    const handleVote = (type) => {
-        if (!isAuthenticated) return;
+const ForumPostCard = ({ post }) => {
+  const { _id, title, description, image, authorName, authorImage, authorRole, createAt } = post;
 
-        if (type === 'like') {
-            if (userVote === 'like') {
-                setLikes(prev => prev - 1);
-                setUserVote(null);
-            } else {
-                setLikes(prev => prev + 1);
-                if (userVote === 'dislike') setDislikes(prev => prev - 1);
-                setUserVote('like');
-            }
-        } else if (type === 'dislike') {
-            if (userVote === 'dislike') {
-                setDislikes(prev => prev - 1);
-                setUserVote(null);
-            } else {
-                setDislikes(prev => prev + 1);
-                if (userVote === 'like') setLikes(prev => prev - 1);
-                setUserVote('dislike');
-            }
-        }
-        
-        // TODO: Fire API call to trigger backend update: 
-        // updatePostVote(post.id, type);
-    };
+  // Format date to a readable string
+  const formattedDate = new Date(createAt).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
-    return (
-        <Card className="w-full bg-neutral-900 border border-neutral-800 text-neutral-100">
-            <Card.Header className="flex flex-col items-start gap-1 p-6">
-                
-                <Card.Title className="text-2xl font-bold tracking-tight text-white">
-                    {post.title || "Untitled Post"}
-                </Card.Title>
-                <Card.Description className="text-xs text-neutral-500">
-                    Posted by {post.author?.name || "Anonymous"} • {post.createdAt || "Just now"}
-                </Card.Description>
-            </Card.Header>
+  return (
+    <Card className="bg-background/60 dark:bg-zinc-900/50 backdrop-blur-md border border-divider hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/10 overflow-hidden flex flex-col h-full rounded-2xl">
+      {/* Post Cover Image */}
+      <div className="relative aspect-video w-full overflow-hidden bg-zinc-800">
+        <img
+          src={image || "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800"} 
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        {/* Author Role Badge Overlaid */}
+        {authorRole && (
+          <span className="absolute top-3 right-3 bg-black/70 backdrop-blur-md border border-white/10 text-primary text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full shadow-md">
+            {authorRole}
+          </span>
+        )}
+      </div>
 
-            <Card.Content className="px-6 py-2 text-neutral-300 leading-relaxed">
-                {post.imageUrl && (
-                    <img 
-                        src={post.imageUrl} 
-                        alt={post.title} 
-                        className="w-full max-h-[400px] object-cover rounded-xl mb-4 border border-neutral-800"
-                    />
-                )}
-                <p className="whitespace-pre-line">{post.description}</p>
-            </Card.Content>
+      {/* Card Header: Author Info */}
+      <Card.Header className="flex gap-3 px-4 pt-4 pb-2 items-center">
+        <img
+          src={authorImage || "https://randomuser.me/api/portraits/lego/1.jpg"}
+          alt={authorName}
+          className="w-10 h-10 rounded-full object-cover border border-primary/30"
+        />
+        <div className="flex flex-col text-left">
+          <p className="text-sm font-bold tracking-wide text-foreground">{authorName}</p>
+          <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+            <CalendarIcon />
+            <span>{formattedDate}</span>
+          </div>
+        </div>
+      </Card.Header>
 
-            <Card.Footer className="px-6 py-4 flex gap-4 border-t border-neutral-800/50">
-                {/* Like Button */}
-                <button 
-                    disabled={!isAuthenticated}
-                    onClick={() => handleVote('like')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium ${
-                        !isAuthenticated ? 'opacity-40 cursor-not-allowed' : 'hover:bg-neutral-800'
-                    } ${userVote === 'like' ? 'text-cyan-400 bg-cyan-500/10' : 'text-neutral-400'}`}
-                >
-                    <ThumbsUp width={16} height={16} />
-                    <span>{likes}</span>
-                </button>
+      {/* Card Content: Title & Truncated Description */}
+      <Card.Content className="flex-grow px-4 py-2 flex flex-col gap-2">
+        <h3 className="text-lg font-extrabold text-foreground tracking-tight leading-snug line-clamp-2 hover:text-primary transition-colors duration-200">
+          {title}
+        </h3>
+        <p className="text-sm text-zinc-400 leading-relaxed line-clamp-3">
+          {description}
+        </p>
+      </Card.Content>
 
-                {/* Dislike Button */}
-                <button 
-                    disabled={!isAuthenticated}
-                    onClick={() => handleVote('dislike')}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium ${
-                        !isAuthenticated ? 'opacity-40 cursor-not-allowed' : 'hover:bg-neutral-800'
-                    } ${userVote === 'dislike' ? 'text-rose-400 bg-rose-500/10' : 'text-neutral-400'}`}
-                >
-                    <ThumbsDown width={16} height={16} />
-                    <span>{dislikes}</span>
-                </button>
-            </Card.Footer>
-        </Card>
-    );
-}
+      {/* Card Footer: Action Button */}
+      <Card.Footer className="px-4 pb-4 pt-2 mt-auto">
+        <Link 
+          href={`/forum/${_id}`}
+          className="w-full text-center bg-zinc-100 dark:bg-zinc-800 hover:bg-primary hover:text-primary-foreground text-foreground text-sm font-semibold py-2.5 px-4 rounded-xl transition-all duration-200 shadow-sm border border-divider hover:border-transparent"
+        >
+          Read More
+        </Link>
+      </Card.Footer>
+    </Card>
+  );
+};
+
+export default ForumPostCard;

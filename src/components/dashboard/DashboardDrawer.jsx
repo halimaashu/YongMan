@@ -34,7 +34,7 @@ export function DashboardDrawer() {
     admin: [
       { icon: House,      href: "/dashboard/admin",                  label: "Overview" },
       { icon: Person,     href: "/dashboard/admin/users",            label: "Manage Users" },
-      { icon: ChartPie,   href: "/dashboard/admin/applied-trainers", label: "Applied Trainers" },
+      
       { icon: Bookmark,   href: "/dashboard/admin/trainers",         label: "Manage Trainers" },
       { icon: FolderPlus, href: "/dashboard/admin/classes",          label: "Manage Classes" },
       { icon: Envelope,   href: "/dashboard/admin/add-post",         label: "Add Forum Post" },

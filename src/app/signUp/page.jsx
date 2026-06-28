@@ -434,7 +434,7 @@ export default function SignUpPage() {
         {/* Footer link */}
         <p className="text-xs text-center text-gray-500 mt-6">
           Already have an account?{" "}
-          <a href="/login" className="text-[#00E5FF] font-bold hover:underline">
+          <a href="/logIn" className="text-[#00E5FF] font-bold hover:underline">
             Sign in
           </a>
         </p>
