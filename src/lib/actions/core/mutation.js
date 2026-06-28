@@ -8,12 +8,12 @@ export const FetchServer=async(path)=>{
 }
 
 // console.log(baseUrl,"from env=========================")
-export const mutationServer = async (path, data) => {
+export const mutationServer = async (path, data,method="POST") => {
   try {
     console.log('Posting to:', `${baseUrl}${path}`);
 
     const response = await fetch(`${baseUrl}${path}`, {
-      method: 'POST',
+      method: method,
       headers: {
         'Content-Type': 'application/json',
       },

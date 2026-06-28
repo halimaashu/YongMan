@@ -4,9 +4,21 @@ import { Table, Avatar, Button } from "@heroui/react";
 // Gravity UI Icons
 import { Eye, TrashBin } from "@gravity-ui/icons";
 import Link from "next/link";
+import { makeUnFavorite } from "@/lib/actions/api/favorite";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function FavoriteClassTable({ data }) {
-  console.log(data[1].imageUrl);
+  const router=useRouter()
+  console.log(data,"from the detail on favorite classes");
+  const handelUnFavorite=async(data)=>{
+    const deleteFavorite=await makeUnFavorite(data)
+    if(deleteFavorite){
+      toast.error("un favorite class")
+      router.refresh()
+    }
+
+  }
   return (
     <div className="w-full">
       <div className=""></div>
@@ -94,7 +106,7 @@ export default function FavoriteClassTable({ data }) {
                         variant="light"
                         className="text-zinc-500 hover:text-red-400 hover:bg-red-950/30 min-w-8 w-8 h-8"
                         aria-label="Delete Favorite"
-                        onClick={() => console.log("Delete item:", item._id)}
+                        onClick={()=>handelUnFavorite(item)}
                       >
                         <TrashBin width={16} height={16} />
                       </Button>

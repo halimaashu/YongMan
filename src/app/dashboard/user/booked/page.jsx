@@ -15,10 +15,10 @@ const page =async () => {
     }
     console.log(user,"from booked class")
     const myClass=await myBookedClass(user.id)
-    console.log(myClass,"llllllllllllllllll")
+    
     return (
         <div>
-            this is booked calsaddsd
+            <h1 className='text-2xl font-bold text-center'>My booked All Class</h1>
             <BookedCallsTable myClass={myClass} />
         </div>
     );

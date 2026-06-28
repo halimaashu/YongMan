@@ -2,8 +2,11 @@
 import React from "react";
 import { Table } from "@heroui/react";
 import { TrashBin, ArrowRight } from "@gravity-ui/icons";
+import Link from "next/link";
 
 const BookedCallsTable = ({ myClass = [] }) => {
+ 
+
   return (
     // Outer container takes full width
     <div className="w-full p-4 bg-zinc-900 rounded-xl border border-zinc-800">
@@ -36,7 +39,7 @@ const BookedCallsTable = ({ myClass = [] }) => {
                     </Table.Cell>
 
                     {/* Price */}
-                    <Table.Cell className="py-4 px-4 text-sm text-zinc-300 font-mono">
+                    <Table.Cell className="py-4 px-4 text-sm text-green-600 font-mono">
                       ${item.price}
                     </Table.Cell>
 
@@ -48,13 +51,15 @@ const BookedCallsTable = ({ myClass = [] }) => {
                     {/* GravityUI Action Buttons */}
                     <Table.Cell className="py-4 px-4 text-sm text-right">
                       <div className="flex items-center justify-end gap-3">
+                        <Link href={`/classes/${item?.productId}`}>
                         <button 
-                          onClick={() => console.log("Open details for:", item.title)}
+                         
                           className="p-1.5 text-zinc-400 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-md transition-all"
                           title="View Details"
                         >
                           <ArrowRight width={16} height={16} />
                         </button>
+                        </Link>
                         <button 
                           onClick={() => console.log("Delete item at index:", index)}
                           className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all"
