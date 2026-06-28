@@ -1,3 +1,4 @@
+import FavoriteClassTable from '@/components/admin/user/FavoriteClassTable';
 import GymClassCard from '@/components/class/GymClassCard';
 import { getAllFavoriteClass } from '@/lib/actions/api/favorite';
 import { auth } from '@/lib/auth';
@@ -16,14 +17,10 @@ const page =async () => {
 
     }
     const getFavoriteClass=await getAllFavoriteClass(user?.id)
-    console.log(getFavoriteClass)
+    console.log(getFavoriteClass,"my favorite class")
     return (
         <div>
-            {
-                getFavoriteClass.map(cl=>
-                <GymClassCard key={cl._id} classData={cl} />)
-                
-            }
+           <FavoriteClassTable data={getFavoriteClass}/>
         </div>
     );
 };

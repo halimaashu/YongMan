@@ -7,14 +7,16 @@ import {
   Clock,
   Calendar,
   Flame,
-  Layers,
+
   CircleDollar,
+  Star,
 } from "@gravity-ui/icons";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { postFavoriteClass } from "@/lib/actions/favorite";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import Loading from "@/app/loading";
 
 // Framer motion variants for clean staggered animations
 const containerVariants = {
@@ -31,9 +33,17 @@ const itemVariants = {
 };
 
 export default function ClassDetail({ classDetail }) {
-  console.log(classDetail, "from my de-----------------");
-  const { data: session } = authClient.useSession()
+  // console.log(classDetail, "from my de-----------------");
+  const { data: session ,isPending} = authClient.useSession()
 const user=session?.user
+if (isPending) return <Loading />;
+
+
+const userId=user?.id
+
+const {className ,category,imageUrl,price,_id:postId}=classDetail
+const data={userId,className ,category,imageUrl,price,postId}
+console.log(userId,className ,category,imageUrl,price,postId,"from new de----------------")
 if(!user){
   return (<div className=" h-screen flex justify-center items-center"
   >
@@ -41,7 +51,7 @@ if(!user){
   </div>)
 }
   const handleFavorite =async () => {
-    const postFavorite=postFavoriteClass({...classDetail,userId:user?.id})
+    const postFavorite=postFavoriteClass(data)
 
     toast.success(`Add Favorite initialized for ${classDetail.className}!`);
   };
@@ -213,11 +223,11 @@ if(!user){
                 </Button>
                
               </form>
-               <Button
+               <button
                 onClick={handleFavorite}
                  className={"mt-3 "}>
-                  Add to favorite
-                </Button>
+                 <Star size={60} className="text-3xl font-black text-yellow-600"/>
+                </button>
 
               <span className="text-center text-xs text-default-400 w-full mt-1">
                 Instant confirmation • Secure checkout

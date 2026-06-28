@@ -3,13 +3,13 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-const trainerLayout =async ({children}) => {
+const userLayout =async ({children}) => {
     const session=await auth.api.getSession({
         headers: await headers()
     })
     const user= session?.user
     console.log(user)
-    if(!user || user.role!=="trainer"){
+    if(!user ||  user.role !=="user" ){
         redirect("/logIn")
     }
     return (
@@ -19,4 +19,4 @@ const trainerLayout =async ({children}) => {
     );
 };
 
-export default trainerLayout;
+export default userLayout;

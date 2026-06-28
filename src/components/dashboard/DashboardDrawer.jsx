@@ -2,20 +2,18 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
-import { useOverlayState } from "@heroui/react"; // ✅ correct v3 hook
+
+import { useOverlayState } from "@heroui/react";
 import {
   LayoutSideContent, House, Magnifier, FolderPlus,
   Person, Bookmark, ChartPie, CreditCard, Envelope, Gear
 } from "@gravity-ui/icons";
 import { Button, Drawer, Skeleton } from "@heroui/react";
 
-export function DashboardDrawer() {
+export function DashboardDrawer({ role }) {
   const pathname = usePathname();
-  const drawerState = useOverlayState({ defaultOpen: false }); // ✅ v3 pattern
+  const drawerState = useOverlayState({ defaultOpen: false });
 
-  const { data: session, isPending } = authClient.useSession();
-  const role = session?.user?.role || "user";
 
   const routesConfig = {
     user: [
@@ -32,14 +30,13 @@ export function DashboardDrawer() {
       { icon: Person,     href: "/dashboard/trainer/my-posts",   label: "My Forum Posts" },
     ],
     admin: [
-      { icon: House,      href: "/dashboard/admin",                  label: "Overview" },
-      { icon: Person,     href: "/dashboard/admin/users",            label: "Manage Users" },
-      
-      { icon: Bookmark,   href: "/dashboard/admin/trainers",         label: "Manage Trainers" },
-      { icon: FolderPlus, href: "/dashboard/admin/classes",          label: "Manage Classes" },
-      { icon: Envelope,   href: "/dashboard/admin/add-post",         label: "Add Forum Post" },
-      { icon: CreditCard, href: "/dashboard/admin/transactions",     label: "Transactions" },
-      { icon: Gear,       href: "/dashboard/admin/manage-posts",     label: "Forum Moderation" },
+      { icon: House,      href: "/dashboard/admin",              label: "Overview" },
+      { icon: Person,     href: "/dashboard/admin/users",        label: "Manage Users" },
+      { icon: Bookmark,   href: "/dashboard/admin/trainers",     label: "Manage Trainers" },
+      { icon: FolderPlus, href: "/dashboard/admin/classes",      label: "Manage Classes" },
+      { icon: Envelope,   href: "/dashboard/admin/add-post",     label: "Add Forum Post" },
+      { icon: CreditCard, href: "/dashboard/admin/transactions", label: "Transactions" },
+      { icon: Gear,       href: "/dashboard/admin/manage-posts", label: "Forum Moderation" },
     ],
   };
 
@@ -47,20 +44,14 @@ export function DashboardDrawer() {
 
   const navLinks = (
     <nav className="flex flex-col gap-1 w-full">
-      {isPending ? (
-        <div className="space-y-2.5 p-2">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-10 rounded-xl bg-default-100" />
-          ))}
-        </div>
-      ) : (
+      {
         dynamicNavItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.label}
               href={item.href}
-              onClick={() => drawerState.close()} // close drawer on nav
+              onClick={() => drawerState.close()}
               className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 relative group ${
                 isActive
                   ? "bg-primary text-[#00E5FF] font-semibold shadow-lg shadow-primary/20"
@@ -79,7 +70,7 @@ export function DashboardDrawer() {
             </Link>
           );
         })
-      )}
+      }
     </nav>
   );
 
@@ -88,11 +79,7 @@ export function DashboardDrawer() {
       <span className="text-xl font-black tracking-wider text-foreground">
         PULSE<span className="text-primary">NEON</span>
       </span>
-      {!isPending && (
-        <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded-md font-bold">
-          {role}
-        </span>
-      )}
+     
     </div>
   );
 
@@ -108,22 +95,12 @@ export function DashboardDrawer() {
       </aside>
 
       {/* ── Mobile sticky top bar ── */}
-      {/* 
-        HeroUI v3 bug workaround: Drawer must contain the trigger Button as its
-        first child — external state.open() does not work reliably.
-        So we put the mobile top bar INSIDE the Drawer's trigger slot.
-      */}
       <div className="lg:hidden w-full sticky top-0 z-40">
         <Drawer state={drawerState} placement="left">
-          {/* 
-            ✅ v3 workaround: First child = trigger element.
-            We wrap the Menu button so HeroUI's DialogTrigger picks it up correctly.
-          */}
           <div className="w-full bg-content1/80 backdrop-blur-md border-b border-default-100 px-4 py-3 flex items-center justify-between">
             <span className="text-lg font-black tracking-wider">
               PULSE<span className="text-primary">NEON</span>
             </span>
-            {/* This Button acts as the Drawer trigger */}
             <Button
               variant="flat"
               color="primary"
@@ -135,7 +112,6 @@ export function DashboardDrawer() {
             </Button>
           </div>
 
-          {/* ✅ v3 compound structure */}
           <Drawer.Backdrop>
             <Drawer.Content className="max-w-[270px] md:hidden bg-content1 border-r border-default-100">
               <Drawer.Dialog className="h-full flex flex-col">
@@ -143,7 +119,12 @@ export function DashboardDrawer() {
                   {logoBlock}
                   <p className="text-xs text-default-400 font-normal mt-1">
                     Control Panel •{" "}
-                    <span className="text-primary capitalize font-medium">{role}</span>
+                    <span
+                      suppressHydrationWarning
+                      className="text-primary capitalize font-medium"
+                    >
+                      {role}
+                    </span>
                   </p>
                 </Drawer.Header>
                 <Drawer.Body className="px-4 py-4 flex-1 overflow-y-auto">

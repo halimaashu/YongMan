@@ -1,15 +1,26 @@
 import { DashboardDrawer } from "@/components/dashboard/DashboardDrawer";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({ children }) {
+export default async function DashboardLayout({ children }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    redirect("/logIn");
+  }
+
   return (
-    <div className="md:flex min-h-screen ">
+    <div className="md:flex min-h-screen">
       {/* Sidebar */}
-      <DashboardDrawer />
+      <DashboardDrawer role={session.user.role} />
 
       {/* Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Navbar */}
-        <header className="h-16 border-b  flex items-center px-4 md:px-6">
+        <header className="h-16 border-b flex items-center px-4 md:px-6">
           <h1 className="text-lg font-semibold">Nav</h1>
         </header>
 
