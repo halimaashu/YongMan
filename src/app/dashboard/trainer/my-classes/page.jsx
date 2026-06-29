@@ -8,10 +8,10 @@ const TrainerOwmClassPage = async () => {
   const userSession = await auth.api.getSession({
     headers: await headers(),
   });
-  
+
   console.log(userSession?.user);
   const user = userSession?.user;
-  
+
   // Fetch class arrays safely based on user context identity
   const myClass = await FetchServer(`/api/myClass?userId=${user?.id}`);
   console.log(myClass, "from my class pages");
@@ -22,7 +22,7 @@ const TrainerOwmClassPage = async () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">My Class Pages</h1>
-      
+
       {hasClasses ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {myClass.map((classData) => {

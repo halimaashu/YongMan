@@ -1,5 +1,5 @@
 import ForumPostCard from "@/components/forum/ForumPostCard";
-import MyPostForum from "@/components/forum/MyPostForum";
+
 import { getMyForum } from "@/lib/actions/api/forum";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -11,14 +11,16 @@ const MyPostPage = async () => {
   });
   const user = userSession?.user;
   const myPostForum = await getMyForum(`?userId=${user?.id}`);
-  console.log(myPostForum);
+  console.log(myPostForum,"my forum post on card");
   console.log(userSession?.user);
 
   return (
     <div>
       <h1> my post pages</h1>
-     
-       <MyPostForum myPostForum={myPostForum}/>
+     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">{
+      myPostForum.map((post)=> <ForumPostCard key={post._id} post={post}/>)
+      }</div>
+      
     </div>
   );
 };

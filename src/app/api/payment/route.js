@@ -15,9 +15,16 @@ export async function POST(request) {
     })
  
     const user=userSession?.user;
+   if (!user || user.role !== "user") {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
     // console.log(user,"from payment api000000000000000000")
     const formData=await request.formData()
     const price=formData.get("price")
+    const authorId=formData.get("authorId")
     const title=formData.get("title")
     const productId=formData.get("productId")
 
@@ -44,6 +51,7 @@ export async function POST(request) {
         title,
         userId:user?.id,
         userEmail:user.email,
+        authorId,
         productId
 
       },

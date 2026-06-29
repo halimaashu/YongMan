@@ -33,7 +33,7 @@ const itemVariants = {
 };
 
 export default function ClassDetail({ classDetail }) {
-  // console.log(classDetail, "from my de-----------------");
+  console.log(classDetail, "from my de-----------------");
   const { data: session ,isPending} = authClient.useSession()
 const user=session?.user
 if (isPending) return <Loading />;
@@ -198,6 +198,12 @@ if(!user){
                   type="hidden"
                   name="price"
                   value={classDetail.price}
+                  readOnly
+                />
+                <input
+                  type="hidden"
+                  name="authorId"
+                  value={classDetail.userId}
                   readOnly
                 />
                 <input

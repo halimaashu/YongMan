@@ -6,3 +6,7 @@ export const myBookedClass=async(id)=>{
 export const allTransition=async()=>{
     return FetchServer("/api/payment")
 }
+
+export const myAllSellClass=async(id)=>{
+  return FetchServer(`/api/payment?authorId=${id}`)
+}
