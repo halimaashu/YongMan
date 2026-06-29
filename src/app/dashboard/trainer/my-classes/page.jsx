@@ -1,41 +1,37 @@
-import GymClassCard from "@/components/class/GymClassCard";
+import TrainerClassDashboard from "@/components/admin/trainer/TrainerClassDashboard";
 import { FetchServer } from "@/lib/actions/core/mutation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import React from "react";
+
 
 const TrainerOwmClassPage = async () => {
   const userSession = await auth.api.getSession({
     headers: await headers(),
   });
 
-  console.log(userSession?.user);
   const user = userSession?.user;
 
   // Fetch class arrays safely based on user context identity
   const myClass = await FetchServer(`/api/myClass?userId=${user?.id}`);
-  console.log(myClass, "from my class pages");
-
-  // Determine if we have actual valid class items to render
-  const hasClasses = Array.isArray(myClass) && myClass.length > 0;
+  
+  // Ensure we safely map fallback array if endpoint meets database error or missing sets
+  const safeClasses = Array.isArray(myClass) ? myClass : [];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">My Class Pages</h1>
+    <div className="min-h-screen bg-[#09090b] text-white">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            My Class Pages
+          </h1>
+          <p className="mt-2 text-sm text-zinc-400">
+            Welcome back, {user?.name || "Trainer"}. Manage your classes and track student metrics.
+          </p>
+        </div>
 
-      {hasClasses ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {myClass.map((classData) => {
-            return <GymClassCard key={classData._id} classData={classData} />;
-          })}
-        </div>
-      ) : (
-        <div className="min-h-[50vh] flex flex-col justify-center items-center rounded-xl border border-dashed border-default-200 p-8">
-          <h2 className="text-xl font-medium text-default-600 text-center">
-            You havent added any classes yet.
-          </h2>
-        </div>
-      )}
+        {/* HeroUI Render Area */}
+        <TrainerClassDashboard classes={safeClasses} />
+      </div>
     </div>
   );
 };
