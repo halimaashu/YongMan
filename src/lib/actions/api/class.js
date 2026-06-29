@@ -10,3 +10,7 @@ export const getAllClassDetail=async(id)=>{
 export const deleteMyClass=async(data)=>{
  return mutationServer("/api/classDelete",data,"DELETE")
 }
+
+export const classUpdateById=async(data)=>{
+    return mutationServer("/api/class/edit",data,"PATCH")
+}

@@ -7,6 +7,7 @@ import { Pencil,  Persons, TrashBin } from "@gravity-ui/icons";
 import { deleteMyClass } from "@/lib/actions/api/class";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { UpdateClassModal } from "@/components/class/UpdateClassModal";
 
 const TrainerClassDashboard = ({ classes }) => {
   const [activeTab, setActiveTab] = useState("all");
@@ -29,7 +30,11 @@ const TrainerClassDashboard = ({ classes }) => {
         router.refresh()
     }
   };
+const handleEdit =async (data) => {
+    
 
+    // Trigger your HeroUI Dialog/Modal state here
+  };
   const handleViewStudents =async (classId) => {
     alert(`Opening attendees modal for class ID: ${classId}`);
     // Trigger your HeroUI Dialog/Modal state here
@@ -154,12 +159,14 @@ const TrainerClassDashboard = ({ classes }) => {
                             >
                               <Persons className="w-5 h-5" />
                             </button>
-                            <button
+                            <div
+                            
+
                               className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg transition-colors"
                               title="Update Class"
                             >
-                              <Pencil className="w-5 h-5" />
-                            </button>
+                             <UpdateClassModal initialData={item} onRefresh={() => router.refresh()}/>
+                            </div>
                             <button
                               onClick={() => handleDelete(item)}
                               className="p-2 text-zinc-400 hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-colors"
