@@ -9,48 +9,75 @@ import {
   Label,
   InputGroup,
 } from "@heroui/react";
+import { makeTrainer } from "@/lib/actions/apply";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const ManageTrainerPage = ({ allTrainerForm }) => {
   // Safe fallback if data hasn't loaded yet
   const [trainers, setTrainers] = useState(allTrainerForm || []);
-
+  const router = useRouter();
+  // console.log(trainers,"ttttttttttttt")
   // Modal tracking state
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTrainerId, setSelectedTrainerId] = useState(null);
+  const [selectedTrainer, setSelectedTrainer] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
 
   // Handler to approve right away
-  const handleApprove = (id) => {
-    setTrainers((prev) =>
-      prev.map((trainer) =>
-        trainer._id === id ? { ...trainer, status: "Approved" } : trainer
-      )
-    );
+  const handleApprove = async (id, userId) => {
+    const role = "trainer";
+    const status = "approved";
+    const trainer = await makeTrainer(userId, { role, id, status });
+    if (trainer) {
+      toast.success("make trainer success");
+      router.refresh();
+      setTrainers((prev) =>
+        prev.map((trainer) =>
+          trainer._id === id ? { ...trainer, status: "Approved" } : trainer,
+        ),
+      );
+    }
   };
 
   // Open rejection workflow modal
-  const openRejectModal = (id) => {
-    setSelectedTrainerId(id);
+  const openRejectModal = (data) => {
+    setSelectedTrainer(data);
     setRejectReason("");
     setIsModalOpen(true);
   };
 
   // Handle final rejection inside modal
-  const handleFinalRejectSubmit = (e) => {
+  const handleFinalRejectSubmit = async (e) => {
     e.preventDefault();
+
+    // console.log(reasons, selectedTrainer?._id, "rrrrrrrrrrrrr");
+    const id = selectedTrainer._id;
+    const status = "reject";
+
+    // reject logic
+    const reject = await makeTrainer(selectedTrainer.userId, {
+      status,
+      rejectReason,
+      id,
+    });
+    if (reject) {
+      toast("sucess");
+      router.refresh();
+    }
+
     if (!rejectReason.trim()) return;
 
     setTrainers((prev) =>
       prev.map((trainer) =>
-        trainer._id === selectedTrainerId
+        trainer._id === selectedTrainer
           ? { ...trainer, status: "Rejected", reasons: rejectReason }
-          : trainer
-      )
+          : trainer,
+      ),
     );
 
     // Reset and close modal state
     setIsModalOpen(false);
-    setSelectedTrainerId(null);
+    setSelectedTrainer(null);
     setRejectReason("");
   };
 
@@ -72,7 +99,8 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
             Trainer Applications
           </h1>
           <p className="text-sm text-neutral-400 mt-1">
-            Review, approve, or reject incoming application requests from trainers.
+            Review, approve, or reject incoming application requests from
+            trainers.
           </p>
         </div>
       </div>
@@ -95,7 +123,8 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
 
               <Table.Body>
                 {trainers.map((trainer) => {
-                  const statusLower = trainer.status?.toLowerCase() || "pending";
+                  const statusLower =
+                    trainer.status?.toLowerCase() || "pending";
 
                   return (
                     <Table.Row
@@ -163,13 +192,15 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
                         {statusLower === "pending" ? (
                           <div className="flex items-center justify-end gap-3 text-xs">
                             <button
-                              onClick={() => handleApprove(trainer._id)}
+                              onClick={() =>
+                                handleApprove(trainer._id, trainer.userId)
+                              }
                               className="text-emerald-400 hover:underline bg-transparent border-none cursor-pointer p-0"
                             >
                               Approve
                             </button>
                             <button
-                              onClick={() => openRejectModal(trainer._id)}
+                              onClick={() => openRejectModal(trainer)}
                               className="text-red-500 hover:underline bg-transparent border-none cursor-pointer p-0"
                             >
                               Reject
@@ -192,19 +223,19 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
 
       {/* HeroUI Rejection Reason Capture Modal Component */}
       {isModalOpen && (
-        <Modal>
+        <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
           <Modal.Backdrop>
             <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <Modal.Container className="w-full max-w-md bg-[#1a1a1a] border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
                 <Modal.Dialog>
                   <Modal.CloseTrigger>
-                    <button
+                    <div
                       type="button"
                       onClick={() => setIsModalOpen(false)}
                       className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-300 text-lg bg-transparent border-none cursor-pointer"
                     >
                       &times;
-                    </button>
+                    </div>
                   </Modal.CloseTrigger>
 
                   <form onSubmit={handleFinalRejectSubmit}>
@@ -216,7 +247,8 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
 
                     <Modal.Body className="p-6 space-y-4">
                       <p className="text-sm text-neutral-400">
-                        Please state the reason for rejecting this trainer applicant.
+                        Please state the reason for rejecting this trainer
+                        applicant.
                       </p>
 
                       <TextField>
@@ -225,6 +257,7 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
                         </Label>
                         <InputGroup>
                           <InputGroup.Input
+                            name="reasons"
                             required
                             type="text"
                             placeholder="e.g., Incomplete certification details provided."
@@ -238,13 +271,13 @@ const ManageTrainerPage = ({ allTrainerForm }) => {
 
                     <Modal.Footer className="p-6 pt-4 border-t border-neutral-800 bg-[#1e1e1e] flex justify-end gap-3">
                       {/* FIX: Removed nested <button> elements inside HeroUI <Button> components */}
-                      <Button
+                      <div
                         type="button"
                         onClick={() => setIsModalOpen(false)}
                         className="px-4 py-2 text-sm font-medium text-neutral-400 hover:text-white bg-transparent transition-colors"
                       >
                         Cancel
-                      </Button>
+                      </div>
 
                       <Button
                         type="submit"

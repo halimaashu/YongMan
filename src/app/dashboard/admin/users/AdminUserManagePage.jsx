@@ -6,11 +6,12 @@ import Image from "next/image";
 import { CircleCheck, Xmark, ShieldUser, Persons } from '@gravity-ui/icons';
 import { makeAdmin } from "@/lib/actions/api/user";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // Changed to an inline default function export to satisfy Next.js page imports
 export default function AdminUserManagePage({ AllUser }) {
   const [users, setUsers] = useState(AllUser);
-
+const router=useRouter()
   // Helper formatting for join dates
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -51,6 +52,7 @@ export default function AdminUserManagePage({ AllUser }) {
     const admin=await makeAdmin(id)
     if(admin){
       toast.success("make admin success")
+      router.refresh()
     }
   };
 
