@@ -15,10 +15,11 @@ import {
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { postVote } from "@/lib/actions/vote";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export const ForumDetailCard = ({ post, user, votes }) => {
   const router = useRouter();
+  
   const handelLike = async () => {
     toast.success("like");
     const data = {
@@ -27,12 +28,13 @@ export const ForumDetailCard = ({ post, user, votes }) => {
       type: "like",
     };
     const postvote = await postVote(data);
-    if (postVote) {
+    // FIXED: Changed postVote to postvote to check the actual response instance
+    if (postvote) {
       router.refresh();
       toast.success("liked");
     }
-    // api logic here
   };
+
   const handelDisLike = async () => {
     toast.error("Dis like");
     const data = {
@@ -41,12 +43,11 @@ export const ForumDetailCard = ({ post, user, votes }) => {
       type: "dislike",
     };
     const postvote = await postVote(data);
-    if (postVote) {
+    // FIXED: Changed postVote to postvote to check the actual response instance
+    if (postvote) {
       router.refresh();
       console.log(data);
     }
-
-    // api logic here
   };
 
   if (!post) {
@@ -85,12 +86,12 @@ export const ForumDetailCard = ({ post, user, votes }) => {
         <Card.Header className="flex flex-col items-start gap-4 p-6 pb-2">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-3">
-              <Avatar
-                src={post.authorImage}
-                name={post.authorName}
-                size="md"
-                className="ring-2 ring-primary/20"
-              />
+              {/* UPDATED: Hero UI v3 Avatar Anatomy for Post Author */}
+              <Avatar size="md" className="ring-2 ring-primary/20">
+                <Avatar.Image src={post.authorImage} alt={post.authorName} />
+                <Avatar.Fallback name={post.authorName} />
+              </Avatar>
+              
               <div>
                 <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm sm:text-base leading-none">
                   {post.authorName}
@@ -180,12 +181,11 @@ export const ForumDetailCard = ({ post, user, votes }) => {
         <Card className="p-4 border border-zinc-100 dark:border-zinc-800 shadow-sm">
           <Card.Content className="space-y-3 p-0">
             <div className="flex gap-3 items-start">
-              <Avatar
-                src={user.image}
-                name={user.name}
-                size="sm"
-                className="mt-1"
-              />
+              {/* UPDATED: Hero UI v3 Avatar Anatomy for Logged-in Commenter */}
+              <Avatar size="sm" className="mt-1">
+                <Avatar.Image src={user.image} alt={user.name} />
+                <Avatar.Fallback name={user.name} />
+              </Avatar>
               <TextArea
                 minrows={2}
                 placeholder="Share your insights or ask a question..."
@@ -206,14 +206,14 @@ export const ForumDetailCard = ({ post, user, votes }) => {
           </Card.Content>
         </Card>
 
-        {/* Mock Comments Stream (Replace with dynamic array map later) */}
+        {/* Mock Comments Stream */}
         <div className="space-y-4 mt-6">
           <div className="flex gap-3 p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm transition-all hover:border-zinc-200 dark:hover:border-zinc-700">
-            <Avatar
-              src="https://randomuser.me/api/portraits/men/32.jpg"
-              name="Alex Kim"
-              size="sm"
-            />
+            {/* UPDATED: Hero UI v3 Avatar Anatomy for Mock Commenter */}
+            <Avatar size="sm">
+              <Avatar.Image src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alex Kim" />
+              <Avatar.Fallback name="Alex Kim" />
+            </Avatar>
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
                 <div className="flex items-baseline gap-2">
