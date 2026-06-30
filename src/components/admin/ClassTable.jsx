@@ -4,19 +4,21 @@ import React, { useState } from "react";
 import { Table, Chip, Tooltip } from "@heroui/react";
 // Gravity UI Icons
 import { TrashBin, Eye, Check } from "@gravity-ui/icons";
+import { useRouter } from "next/navigation";
+import { deleteMyClass } from "@/lib/actions/api/class";
+import toast from "react-hot-toast";
+import Link from "next/link";
+import { updateClassStatus } from "@/lib/actions/class";
 
 export default function ClassTable({ initialClasses }) {
   const [classList, setClassList] = useState(initialClasses);
-
+const router=useRouter()
   // Handle Approve Action
-  const handleApprove = async (id) => {
+  const handleApprove = async (data) => {
     try {
+     const updateTrainerClassStatus=await updateClassStatus(data)
       // Optimistically update the status locally to 'approved'
-      setClassList((prev) =>
-        prev.map((item) =>
-          item._id === id ? { ...item, status: "approved" } : item,
-        ),
-      );
+      
 
       // Optional: Call your backend action or API route here
       // await approveClassAction(id);
@@ -26,14 +28,18 @@ export default function ClassTable({ initialClasses }) {
   };
 
   // Handle Delete Action
-  const handleDelete = async (id) => {
+  const handleDelete = async (data) => {
     const confirmed = confirm("Are you sure you want to delete this class?");
     if (!confirmed) return;
 
     try {
-      setClassList((prev) => prev.filter((item) => item._id !== id));
-      // Optional: Call your backend action or API route here
-      // await deleteClassAction(id);
+       const deleteById=await deleteMyClass(data)
+          if(deleteById){
+              toast.error("delete one")
+              router.refresh()
+              
+          }
+     
     } catch (error) {
       console.error("Failed to delete class:", error);
     }
@@ -136,7 +142,7 @@ export default function ClassTable({ initialClasses }) {
                       {item.status === "pending" && (
                         <Tooltip color="success" content="Approve Class">
                           <button
-                            onClick={() => handleApprove(item._id)}
+                            onClick={() => handleApprove(item)}
                             className="text-emerald-500 hover:text-emerald-400 p-1 transition-colors rounded hover:bg-emerald-500/10"
                           >
                             <Check width={18} height={18} />
@@ -145,14 +151,16 @@ export default function ClassTable({ initialClasses }) {
                       )}
 
                       <Tooltip content="View Details">
+                        <Link href={`/classes/${item?._id}`}>
                         <button className="text-neutral-400 hover:text-white p-1 transition-colors">
                           <Eye width={18} height={18} />
                         </button>
+                        </Link>
                       </Tooltip>
 
                       <Tooltip color="danger" content="Delete Class">
                         <button
-                          onClick={() => handleDelete(item._id)}
+                          onClick={() => handleDelete(item)}
                           className="text-neutral-500 hover:text-danger p-1 transition-colors"
                         >
                           <TrashBin width={18} height={18} />
