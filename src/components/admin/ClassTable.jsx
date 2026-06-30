@@ -17,6 +17,8 @@ const router=useRouter()
   const handleApprove = async (data) => {
     try {
      const updateTrainerClassStatus=await updateClassStatus(data)
+     toast.success("approved the class")
+     router.refresh()
       // Optimistically update the status locally to 'approved'
       
 

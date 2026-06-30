@@ -14,6 +14,7 @@ import { getAllClass } from "@/lib/actions/api/class";
 import { GetAllUsers } from "@/lib/actions/api/user";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import AdminDashboardChart from "@/components/admin/trainer/AdminDashboardChart";
 
 const Page = async () => {
   // Fetch platform data
@@ -30,7 +31,7 @@ const Page = async () => {
     headers: await headers(),
   });
   const admin = session?.user;
-  console.log(admin)
+  console.log(admin);
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 animate-fade-in">
@@ -40,18 +41,17 @@ const Page = async () => {
         <div className="flex flex-col items-center text-center sm:flex-row sm:text-left gap-4 w-full min-w-0">
           <div>
             <Avatar>
-              <Avatar.Image
-                alt="John Doe"
-                src={admin?.image}
-              />
+              <Avatar.Image alt="John Doe" src={admin?.image} />
               <Avatar.Fallback>{admin.name[0]}</Avatar.Fallback>
             </Avatar>
-            <h1 className="text-2xl font-bold"><span className="text-green-600">Hi </span>{admin.name}</h1>
+            <h1 className="text-2xl font-bold">
+              <span className="text-green-600">Hi </span>
+              {admin.name}
+            </h1>
             {/* <Badge>
               {admin.role}
             </Badge> */}
             <h1 className="text-blue-500 font-bold">{admin?.role}</h1>
-           
           </div>
         </div>
 
@@ -151,6 +151,14 @@ const Page = async () => {
           </Card.Footer>
         </Card>
       </main>
+      {/* chart */}
+      <div className="max-w-lg mx-auto">
+        <AdminDashboardChart
+          users={totalUsers}
+          classes={totalClasses}
+          bookings={totalBooked}
+        />
+      </div>
     </div>
   );
 };
