@@ -3,6 +3,9 @@ import { FetchServer, mutationServer } from "../core/mutation"
 export const getAllClass=async()=>{
     return FetchServer("/api/allClass")
 };
+export const getAllApprovedClass=async()=>{
+    return FetchServer("/api/allApprovedClass")
+}
 export const getAllClassDetail=async(id)=>{
     return FetchServer(`/api/allClass/${id}`)
 };

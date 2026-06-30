@@ -1,12 +1,12 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
+
 :root {
-  /* Your default theme */
-  --background: white;
-  --foreground: black;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
 }
 
-[data-theme='dark'] {
-  --background: black;
-  --foreground: white;
+.dark {
+  --background: #0A0B0E;
+  --foreground: #ffffff;
 }

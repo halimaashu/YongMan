@@ -1,11 +1,11 @@
-import { getAllClass } from '@/lib/actions/api/class';
+import { getAllApprovedClass} from '@/lib/actions/api/class';
 import React from 'react';
 import DisplayClass from './DisplayClass';
 import { PaginationControlled } from '@/components/class/PaginationControlled';
 
 const page = async() => {
     const name="ashik";
-    const classs=await getAllClass()
+    const classs=await getAllApprovedClass()
     // console.log(classs,"from my all classs pahe")
     return (
         <div>

@@ -21,7 +21,7 @@ const ForumPostCard = ({ post }) => {
   return (
     <Card className="bg-background/60 dark:bg-zinc-900/50 backdrop-blur-md border border-divider hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/10 overflow-hidden flex flex-col h-full rounded-2xl">
       {/* Post Cover Image */}
-      <div className="relative aspect-video w-full overflow-hidden bg-zinc-800">
+      <div className="relative aspect-video w-full overflow-hidden ">
         <img
           src={image || "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800"} 
           alt={title}
