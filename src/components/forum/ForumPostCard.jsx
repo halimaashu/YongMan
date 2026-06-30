@@ -10,6 +10,7 @@ const CalendarIcon = () => (
 
 const ForumPostCard = ({ post }) => {
   const { _id, title, description, image, authorName, authorImage, authorRole, createAt } = post;
+  console.log(_id, title, description, image, authorName, authorImage, authorRole, createAt,"_id, title, description, image, authorName, authorImage, authorRole, createAt" )
 
   // Format date to a readable string
   const formattedDate = new Date(createAt).toLocaleDateString("en-US", {

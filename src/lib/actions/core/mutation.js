@@ -1,3 +1,6 @@
+import { authClient } from "@/lib/auth-client";
+
+
 
 
 const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
@@ -10,12 +13,15 @@ export const FetchServer=async(path)=>{
 // console.log(baseUrl,"from env=========================")
 export const mutationServer = async (path, data,method="POST") => {
   try {
+    const {data:token}=await authClient.token() 
+    console.log(token.token)
     console.log('Posting to:', `${baseUrl}${path}`);
 
     const response = await fetch(`${baseUrl}${path}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
+        authorization:`Bearer ${token?.token}`
       },
       body: JSON.stringify(data),
     });
