@@ -23,7 +23,11 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-
+const handleGoogleLogin=async()=>{
+ const data = await authClient.signIn.social({
+    provider: "google",
+  });
+}
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Login Data:", formData);
@@ -181,7 +185,7 @@ export default function LoginPage() {
               {/* Google Button */}
               <button
                 type="button"
-                onClick={() => console.log("Google Sign In")}
+                onClick={ handleGoogleLogin}
                 className="w-full h-11 rounded-xl bg-[#0F111A] border border-[#1E2433] hover:border-gray-600 hover:bg-[#13151F] flex items-center justify-center gap-3 transition-all group"
               >
                 {/* Google SVG Icon */}
