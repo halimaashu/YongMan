@@ -220,7 +220,9 @@ export default function SignUpPage() {
                 <div className="flex items-center gap-4">
                   <div className="h-16 w-16 rounded-full bg-[#0F111A] border-2 border-dashed border-[#1E2433] flex items-center justify-center shrink-0 overflow-hidden">
                     {avatar ? (
-                      <img
+                      <Image
+                      height={"40"}
+                      width={"40"}
                         src={avatar.preview}
                         alt="Preview"
                         className="h-full w-full object-cover"

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 const adminDashboardLayout = async({children}) => {
+    
     const session=await auth.api.getSession({
         headers: await headers()
     })
