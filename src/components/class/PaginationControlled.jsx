@@ -1,13 +1,16 @@
 "use client";
 
 import {Pagination} from "@heroui/react";
-import {useState} from "react";
+import Link from "next/link";
+import { useState } from "react";
 
-export function PaginationControlled() {
-  const [page, setPage] = useState(1);
-  const totalPages = 12;
+
+export function PaginationControlled({currentPage,allPages,classes}) {
+  console.log()
+  const [page,setPage] = useState(currentPage)
+  const totalPages = allPages;
   const itemsPerPage = 10;
-  const totalItems = 120;
+  const totalItems = classes.length;
 
   const getPageNumbers = () => {
     const pages= [];
@@ -46,13 +49,15 @@ export function PaginationControlled() {
   return (
     <Pagination>
       <Pagination.Summary>
-        Showing {startItem}-{endItem} of {totalItems} results
+       Showing {startItem}-{endItem} of {totalItems} results
       </Pagination.Summary>
       <Pagination.Content>
         <Pagination.Item>
-          <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
+          <Pagination.Previous isDisabled={page === 1}>
             <Pagination.PreviousIcon />
-            <span>Previous</span>
+           <Link href={`/classes?page=${page-1}`}>
+           preview
+           </Link>
           </Pagination.Previous>
         </Pagination.Item>
         {getPageNumbers().map((p, i) =>
@@ -62,15 +67,19 @@ export function PaginationControlled() {
             </Pagination.Item>
           ) : (
             <Pagination.Item key={p}>
-              <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
+           <Link href={`/classes?page=${p}`}>
+             <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
                 {p}
               </Pagination.Link>
+           </Link>
             </Pagination.Item>
           ),
         )}
         <Pagination.Item>
-          <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
-            <span>Next</span>
+          <Pagination.Next isDisabled={page === totalPages}>
+          <Link href={`/classes?page=${page+1}`}>
+           next
+           </Link>
             <Pagination.NextIcon />
           </Pagination.Next>
         </Pagination.Item>

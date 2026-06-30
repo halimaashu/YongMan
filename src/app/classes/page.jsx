@@ -3,14 +3,21 @@ import React from 'react';
 import DisplayClass from './DisplayClass';
 import { PaginationControlled } from '@/components/class/PaginationControlled';
 
-const page = async() => {
+
+const page = async({searchParams}) => {
+    const params=await searchParams;
+    console.log(params,"ppppppppppppp")
     const name="ashik";
-    const classs=await getAllApprovedClass()
-    // console.log(classs,"from my all classs pahe")
+    const classs=await getAllApprovedClass(params.page)
+    const currentPage=classs.page
+    const allPages=classs.totalPage
+    console.log(currentPage,allPages)
+
+    const classes=classs.data
     return (
         <div>
-            <DisplayClass classs={classs} />
-            <PaginationControlled/>
+            <DisplayClass classes={classes} />
+            <PaginationControlled currentPage={currentPage} allPages={allPages} classes={classes} />
         </div>
     );
 };
