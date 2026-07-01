@@ -1,27 +1,28 @@
 import { authClient } from "@/lib/auth-client";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export const FetchServer = async (path) => {
+  try {
+    const response = await fetch(`${baseUrl}${path}`);
 
-
-
-const baseUrl=process.env.NEXT_PUBLIC_BASE_URL;
-export const FetchServer=async(path)=>{
-  const response = await fetch(`${baseUrl}${path}`)
-  return response.json()
-
-}
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // console.log(baseUrl,"from env=========================")
-export const mutationServer = async (path, data,method="POST") => {
+export const mutationServer = async (path, data, method = "POST") => {
   try {
-    const {data:token}=await authClient.token() 
-    console.log(token.token)
-    console.log('Posting to:', `${baseUrl}${path}`);
+    const { data: token } = await authClient.token();
+    console.log(token.token);
+    console.log("Posting to:", `${baseUrl}${path}`);
 
     const response = await fetch(`${baseUrl}${path}`, {
       method: method,
       headers: {
-        'Content-Type': 'application/json',
-        authorization:`Bearer ${token?.token}`
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token?.token}`,
       },
       body: JSON.stringify(data),
     });
@@ -45,11 +46,11 @@ export const mutationServer = async (path, data,method="POST") => {
       data: result,
     };
   } catch (error) {
-    console.error('Fetch failed:', error);
+    console.error("Fetch failed:", error);
 
     return {
       ok: false,
-      error: error.message || 'Network error',
+      error: error.message || "Network error",
     };
   }
 };

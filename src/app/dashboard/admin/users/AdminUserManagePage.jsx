@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 // Changed to an inline default function export to satisfy Next.js page imports
 export default function AdminUserManagePage({ AllUser }) {
   const [users, setUsers] = useState(AllUser);
+  console.log(users,"uuuuuuuuuuuuuuuuuuuuuu")
 const router=useRouter()
   // Helper formatting for join dates
   const formatDate = (dateString) => {

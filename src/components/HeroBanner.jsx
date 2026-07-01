@@ -53,7 +53,7 @@ const HeroBanner = () => {
         {/* Hero Headline (Updated with Gene Tunney quote) */}
         <motion.h2 
           variants={itemVariants}
-          className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white leading-tight max-w-3xl mx-auto"
+          className="text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white leading-tight max-w-3xl mx-auto"
         >
           To enjoy the glow of <br className="hidden sm:inline" /> good health, 
           <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] via-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(0,229,255,0.25)]">
@@ -75,19 +75,22 @@ const HeroBanner = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
           {/* Neon Action Button */}
+         <Link  href="/classes">
           <Button
-            as={Link}
-            href="/classes"
+       
+           
             className="w-full sm:w-auto h-12 px-6 rounded-lg text-xs font-bold uppercase tracking-wider text-black bg-[#00E5FF] hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)] flex items-center justify-center gap-2 group"
           >
             Explore Classes
             <ArrowRight width={14} height={14} className="transition-transform group-hover:translate-x-1" />
-          </Button>
+          </Button> 
+         </Link>
 
           {/* Border-Glow Outline Action Button */}
-          <Button
-            as={Link}
-            href="/forum"
+         <Link href="/forum">
+          <Button 
+           
+            
             variant="bordered"
             className="w-full sm:w-auto h-12 px-6 rounded-lg text-xs font-bold uppercase tracking-wider text-white border-none p-0.5 bg-gradient-to-br from-gray-800 to-gray-700/50 hover:from-[#00E5FF] hover:to-blue-600 transition-all duration-300"
           >
@@ -96,6 +99,7 @@ const HeroBanner = () => {
               Watch Demo
             </span>
           </Button>
+         </Link>
         </motion.div>
       </motion.div>
     </section>
