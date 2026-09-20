@@ -18,10 +18,10 @@ const AllCommunityFromPage = async () => {
             {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-divider pb-6">
                 <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl bg-gradient-to-r from-foreground to-zinc-500 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl bg-gradient-to-r from-foreground to-zinc-500 text-center bg-clip-text text-transparent">
                         Community Forum
                     </h1>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="mt-2 text-sm text-muted-foreground text-center">
                         Share your fitness journey, routines, and expert knowledge with the squad.
                     </p>
                 </div>

@@ -7,6 +7,8 @@ import Image from "next/image";
 import BmiCalculator from "../components/BmiCalculatorCard";
 import FeaturedClass from "@/components/FeaturedClass";
 import CarouselBanner from "@/components/CarouselBanner";
+import Testimonials from "@/components/Testimonials";
+import CTASection from "@/components/CTASection";
 
 
 export default function Home() {
@@ -18,6 +20,8 @@ export default function Home() {
       <ProgramSelector />
       <BmiCalculator />
       <FeaturedClass />
+      <Testimonials/>
+      <CTASection/>
       
       
     </div>
