@@ -118,9 +118,9 @@ export default function SignUpPage() {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
 
   return (
-    <div className="min-h-screen w-full bg-[#060709] flex items-center justify-center px-4 font-sans selection:bg-[#00E5FF]/30 relative overflow-hidden">
+    <div className="min-h-screen w-full bg-[#060709] flex items-center justify-center px-4 font-sans selection:bg-[#ff551f]/30 relative overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00E5FF]/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#ff551f]/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-purple-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
       {/* Card */}
@@ -142,7 +142,7 @@ export default function SignUpPage() {
             />
           </div>
           <span className="text-white font-black tracking-widest text-sm uppercase">
-            Yong<span className="text-[#00E5FF]">Man</span>
+            Yong<span className="text-[#ff551f]">Man</span>
           </span>
         </div>
 
@@ -176,7 +176,7 @@ export default function SignUpPage() {
                         key={value}
                         className={`flex items-center gap-2.5 p-3 rounded-xl bg-[#0F111A] border cursor-pointer transition-all ${
                           selected
-                            ? "border-[#00E5FF]"
+                            ? "border-[#ff551f]"
                             : "border-[#1E2433] hover:border-gray-600"
                         }`}
                       >
@@ -192,11 +192,11 @@ export default function SignUpPage() {
                         />
                         <span
                           className={`h-4 w-4 rounded-full border flex items-center justify-center shrink-0 transition-all ${
-                            selected ? "border-[#00E5FF]" : "border-gray-600"
+                            selected ? "border-[#ff551f]" : "border-gray-600"
                           }`}
                         >
                           {selected && (
-                            <span className="h-2 w-2 rounded-full bg-[#00E5FF] block" />
+                            <span className="h-2 w-2 rounded-full bg-[#ff551f] block" />
                           )}
                         </span>
                         <span
@@ -233,7 +233,7 @@ export default function SignUpPage() {
                   </div>
 
                   <div className="flex flex-col gap-2 flex-1">
-                    <label className="cursor-pointer w-full h-10 rounded-xl bg-[#0F111A] border border-[#1E2433] hover:border-[#00E5FF] flex items-center justify-center gap-2 transition-all group">
+                    <label className="cursor-pointer w-full h-10 rounded-xl bg-[#0F111A] border border-[#1E2433] hover:border-[#ff551f] flex items-center justify-center gap-2 transition-all group">
                       <input
                         type="file"
                         accept="image/png, image/jpeg, image/webp"
@@ -249,7 +249,7 @@ export default function SignUpPage() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-gray-500 group-hover:text-[#00E5FF] transition-colors"
+                        className="text-gray-500 group-hover:text-[#ff551f] transition-colors"
                       >
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="17 8 12 3 7 8" />
@@ -293,7 +293,7 @@ export default function SignUpPage() {
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={update("name")}
-                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#00E5FF] transition-all"
+                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ff551f] transition-all"
                   />
                 </div>
                 <FieldError className="text-xs text-red-400 mt-1" />
@@ -315,7 +315,7 @@ export default function SignUpPage() {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={update("email")}
-                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#00E5FF] transition-all"
+                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ff551f] transition-all"
                   />
                 </div>
                 <FieldError className="text-xs text-red-400 mt-1" />
@@ -337,7 +337,7 @@ export default function SignUpPage() {
                     placeholder="Min. 8 characters"
                     value={formData.password}
                     onChange={update("password")}
-                    className="w-full h-11 pl-10 pr-11 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#00E5FF] transition-all"
+                    className="w-full h-11 pl-10 pr-11 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ff551f] transition-all"
                   />
                   <button
                     type="button"
@@ -364,7 +364,7 @@ export default function SignUpPage() {
                 type="submit"
                 isDisabled={uploading}
                 endContent={!uploading && <ArrowRight width={14} />}
-                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#00E5FF] to-[#00B0FF] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#ff551f] to-[#00B0FF] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {uploading ? "Uploading..." : "Create Account"}
               </Button>
@@ -436,7 +436,7 @@ export default function SignUpPage() {
         {/* Footer link */}
         <p className="text-xs text-center text-gray-500 mt-6">
           Already have an account?{" "}
-          <a href="/logIn" className="text-[#00E5FF] font-bold hover:underline">
+          <a href="/logIn" className="text-[#ff551f] font-bold hover:underline">
             Sign in
           </a>
         </p>

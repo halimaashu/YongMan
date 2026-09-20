@@ -50,9 +50,9 @@ const handleGoogleLogin=async()=>{
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
 
   return (
-    <div className="min-h-screen w-full bg-[#060709] flex items-center justify-center px-4 font-sans selection:bg-[#00E5FF]/30 relative overflow-hidden">
+    <div className="min-h-screen w-full bg-[#060709] flex items-center justify-center px-4 font-sans selection:bg-[#ff551f]/30 relative overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#00E5FF]/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#ff551f]/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-purple-500/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
       {/* Card */}
@@ -74,7 +74,7 @@ const handleGoogleLogin=async()=>{
             />
           </div>
           <span className="text-white font-black tracking-widest text-sm uppercase">
-            Young<span className="text-[#00E5FF]">Man</span>
+            Young<span className="text-[#ff551f]">Man</span>
           </span>
         </div>
 
@@ -108,7 +108,7 @@ const handleGoogleLogin=async()=>{
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={update("email")}
-                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#00E5FF] transition-all"
+                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ff551f] transition-all"
                   />
                 </div>
                 <FieldError className="text-xs text-red-400 mt-1" />
@@ -122,7 +122,7 @@ const handleGoogleLogin=async()=>{
                   </Label>
                   <a
                     href="/forgot-password"
-                    className="text-[11px] text-gray-500 hover:text-[#00E5FF] transition-colors"
+                    className="text-[11px] text-gray-500 hover:text-[#ff551f] transition-colors"
                   >
                     Forgot password?
                   </a>
@@ -138,7 +138,7 @@ const handleGoogleLogin=async()=>{
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={update("password")}
-                    className="w-full h-11 pl-10 pr-11 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#00E5FF] transition-all"
+                    className="w-full h-11 pl-10 pr-11 rounded-xl bg-[#0F111A] border border-[#1E2433] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#ff551f] transition-all"
                   />
                   <button
                     type="button"
@@ -161,7 +161,7 @@ const handleGoogleLogin=async()=>{
               <Button
                 type="submit"
                 endContent={<ArrowRight width={14} />}
-                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#00E5FF] to-[#00B0FF] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all"
+                className="w-full h-11 rounded-xl bg-gradient-to-r from-[#ff551f] to-[#0485f7] text-black font-extrabold tracking-wider text-xs uppercase shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.4)] transition-all"
               >
                 Sign In
               </Button>
@@ -226,7 +226,7 @@ const handleGoogleLogin=async()=>{
           Don&apos;t have an account?{" "}
           <a
             href="/signUp"
-            className="text-[#00E5FF] font-bold hover:underline"
+            className="text-[#ff551f] font-bold hover:underline"
           >
             Create one
           </a>

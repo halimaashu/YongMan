@@ -144,7 +144,7 @@ if(!user){
 
             <div className="flex items-center gap-3 p-3 bg-default-50 rounded-xl col-span-2">
               <span className="text-primary text-xl">
-                <Calendar className="text-[#00E5FF]" />
+                <Calendar className="text-[#ff551f]" />
               </span>
               <div>
                 <p className="text-xs text-default-400 font-medium">
@@ -167,7 +167,7 @@ if(!user){
               </Card.Title>
               {/* FIX 1: Changed inner elements to spans to safely nest inside Card.Description */}
               <Card.Description className="w-full">
-                <span className="flex items-center text-3xl font-bold text-[#00E5FF]">
+                <span className="flex items-center text-3xl font-bold text-[#ff551f]">
                   <CircleDollar className="w-6 h-6 mr-1" />
                   <span>{classDetail.price}</span>
                 </span>

@@ -43,7 +43,7 @@ const ProgramSelector = () => {
         {/* Left Side Controller Stack */}
         <div className="lg:col-span-5 space-y-6">
           <div>
-            <span className="text-[10px] uppercase font-black tracking-widest text-[#00E5FF]">
+            <span className="text-[10px] uppercase font-black tracking-widest text-[#ff551f]">
               Target Optimization
             </span>
             <h3 className="text-2xl sm:text-4xl font-black uppercase text-white mt-1">
@@ -58,7 +58,7 @@ const ProgramSelector = () => {
                 onClick={() => setActiveTab(key)}
                 className={`w-full flex items-center justify-between p-4 rounded-xl text-left border transition-all duration-300 relative ${
                   activeTab === key
-                    ? 'bg-[#161A23] border-[#00E5FF] text-white'
+                    ? 'bg-[#161A23] border-[#ff551f] text-white'
                     : 'bg-transparent border-gray-900 text-gray-500 hover:text-gray-300 hover:border-gray-800'
                 }`}
               >
@@ -68,14 +68,14 @@ const ProgramSelector = () => {
                 <ArrowChevronRight 
                   width={14} 
                   height={14} 
-                  className={`transition-transform duration-300 ${activeTab === key ? 'text-[#00E5FF] translate-x-1' : 'opacity-30'}`} 
+                  className={`transition-transform duration-300 ${activeTab === key ? 'text-[#ff551f] translate-x-1' : 'opacity-30'}`} 
                 />
                 
                 {/* Active neon subtle border accent slider layer */}
                 {activeTab === key && (
                   <motion.div
                     layoutId="activeGlow"
-                    className="absolute inset-0 rounded-xl border border-[#00E5FF] pointer-events-none shadow-[0_0_15px_rgba(0,229,255,0.15)]"
+                    className="absolute inset-0 rounded-xl border border-[#ff551f] pointer-events-none shadow-[0_0_15px_rgba(0,229,255,0.15)]"
                     style={{ zIndex: 10 }}
                   />
                 )}
@@ -95,7 +95,7 @@ const ProgramSelector = () => {
               transition={{ duration: 0.2 }}
               className="space-y-6"
             >
-              <div className="inline-block px-2.5 py-0.5 rounded text-[9px] uppercase font-black tracking-widest text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/20">
+              <div className="inline-block px-2.5 py-0.5 rounded text-[9px] uppercase font-black tracking-widest text-[#ff551f] bg-[#ff551f]/10 border border-[#ff551f]/20">
                 {tracks[activeTab].tag}
               </div>
               
@@ -124,7 +124,7 @@ const ProgramSelector = () => {
 
           <div className="pt-8">
             <Button
-              className="w-full sm:w-auto text-xs font-bold uppercase tracking-wider text-black bg-[#00E5FF] hover:bg-cyan-400 h-11 px-6 rounded-lg transition-all"
+              className="w-full sm:w-auto text-xs font-bold uppercase tracking-wider text-black bg-[#ff551f] hover:bg-cyan-400 h-11 px-6 rounded-lg transition-all"
             >
               Initialize This Track
             </Button>

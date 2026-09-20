@@ -41,7 +41,7 @@ export default function GymClassCard({classData}) {
         {/* Difficulty and Category Badges */}
         <div className="absolute top-3 left-3 z-10 flex gap-2">
           <span className={`flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-md bg-black/40 text-white border border-white/20 capitalize ${classData.difficulty === 'advanced' ? 'text-red-400' : 'text-primary'}`}>
-            <Flame className="w-3.5 h-3.5 text-[#00E5FF]" />
+            <Flame className="w-3.5 h-3.5 text-[#ff551f]" />
             {classData.difficulty}
           </span>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-md bg-black/40 text-white border border-white/20 capitalize">
@@ -55,8 +55,8 @@ export default function GymClassCard({classData}) {
         {/* Card.Title contains Title and Price layout */}
         <Card.Title className="w-full flex justify-between items-start gap-2 text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-200">
           <span>{classData.className}</span>
-          <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-[#00E5FF] flex items-center">
-            <CircleDollar fontSize={40} className="w-3.5 h-3.5 text-[#00E5FF]"/>
+          <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-[#ff551f] flex items-center">
+            <CircleDollar fontSize={40} className="w-3.5 h-3.5 text-[#ff551f]"/>
             {Number(classData.price).toLocaleString()}
           </span>
         </Card.Title>
@@ -79,11 +79,11 @@ export default function GymClassCard({classData}) {
         {/* Schedule metadata details */}
         <div className="grid grid-cols-2 gap-y-2 text-sm font-medium text-default-600">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#00E5FF]" />
+            <Clock className="w-4 h-4 text-[#ff551f]" />
             <span>{classData.scheduleTime}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#00E5FF]" />
+            <Layers className="w-4 h-4 text-[#ff551f]" />
             <span className="text-xs truncate">
               {classData.scheduleDays.map(d => capitalize(d.slice(0, 3))).join(', ')}
             </span>
@@ -95,7 +95,7 @@ export default function GymClassCard({classData}) {
       <Card.Footer className="px-5 pb-5 pt-2">
         <Link
         href={`/classes/${classData._id}`} 
-          className="w-full bg-gradient-to-r from-[#00E5FF] to-violet-500 hover:from-[#00E5FF]0 hover:to-[#00E5FF] text-white font-bold rounded-xl py-3 shadow-lg shadow-orange-500/20 transition-all transform active:scale-98 cursor-pointer text-center text-sm"
+          className="w-full bg-gradient-to-r from-[#ff551f] to-violet-500 hover:from-[#ff551f]0 hover:to-[#ff551f] text-white font-bold rounded-xl py-3 shadow-lg shadow-orange-500/20 transition-all transform active:scale-98 cursor-pointer text-center text-sm"
           
         >
           View Detail

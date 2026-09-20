@@ -52,7 +52,7 @@ const Banner = () => {
           <motion.div variants={fadeInUp} className="w-full">
             <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-6xl font-black tracking-tight text-white leading-tight sm:leading-none">
               PUSH YOUR LIMITS <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-[#00E5FF] via-cyan-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(0,229,255,0.15)]">
+              <span className="bg-gradient-to-r from-[#ff551f] via-cyan-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(0,229,255,0.15)]">
                 DEFINE YOURSELF
               </span>
             </h1>
@@ -72,7 +72,7 @@ const Banner = () => {
             <Link href="/classes">
             <Button
               size="lg"
-              className="w-full sm:w-auto font-bold tracking-wide text-zinc-950 px-8 rounded-xl bg-[#00E5FF] shadow-lg shadow-[#00E5FF]/20 hover:bg-[#00E5FF]/90 hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+              className="w-full sm:w-auto font-bold tracking-wide text-zinc-950 px-8 rounded-xl bg-[#ff551f] shadow-lg shadow-[#ff551f]/20 hover:bg-[#ff551f]/90 hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
               endContent={<ArrowRight className="w-4 h-4 text-zinc-950 font-bold" />}
             >
               Browse All Classes
@@ -82,7 +82,7 @@ const Banner = () => {
            <Link href="/about">
              <Button
                size="lg"
-               className="w-full sm:w-auto font-bold tracking-wide text-zinc-950 px-8 rounded-xl  shadow-lg shadow-zinc-900/20  hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
+               className="w-full sm:w-auto font-bold tracking-wide text-zinc-950 bg-none px-8 rounded-xl  shadow-lg shadow-zinc-900/20  hover:scale-[1.03] active:scale-[0.98] transition-all duration-200"
                endContent={<ArrowRight className="w-4 h-4 text-zinc-950 font-bold" />}
              >
                Learn More

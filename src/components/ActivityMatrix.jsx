@@ -11,8 +11,8 @@ const ActivityMatrix = () => {
       title: "Total Burnt",
       description: "+12.4% today",
       value: "1,248,390 kcal",
-      icon: <Flame className="text-[#00E5FF]" width={20} height={20} />,
-      glow: "hover:shadow-[0_0_25px_rgba(0,229,255,0.15)] hover:border-[#00E5FF]/30",
+      icon: <Flame className="text-[#ff551f]" width={20} height={20} />,
+      glow: "hover:shadow-[0_0_25px_rgba(0,229,255,0.15)] hover:border-[#ff551f]/30",
     },
     {
       title: "Active Routines",
@@ -42,11 +42,12 @@ const ActivityMatrix = () => {
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
+        <span className=" flex  m-5 justify-center items-center font-bold text-center mx-auto text-[#ff551f]">
+              . LIVE ENGINE CORE .
+            </span>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
           <div>
-            <span className="text-[10px] uppercase font-black tracking-widest text-[#00E5FF]">
-              Live Engine Core
-            </span>
+            
             <h3 className="text-2xl sm:text-4xl font-black uppercase text-white mt-1">
               Platform Activity Matrix
             </h3>

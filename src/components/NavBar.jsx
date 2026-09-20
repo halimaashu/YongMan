@@ -56,7 +56,7 @@ const NavBar = () => {
             </div>
             <h1 className="text-lg font-black tracking-widest text-white uppercase">
               Young
-              <span className="text-[#00E5FF] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">
+              <span className="text-[#ff551f] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">
                 Man
               </span>
             </h1>
@@ -68,9 +68,9 @@ const NavBar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-xs uppercase tracking-wider font-semibold transition-all duration-200 hover:text-[#00E5FF] ${
+                className={`text-xs uppercase tracking-wider font-semibold transition-all duration-200 hover:text-[#ff551f] ${
                   isActive(link.href)
-                    ? "text-[#00E5FF] drop-shadow-[0_0_6px_rgba(0,229,255,0.4)]"
+                    ? "text-[#ff551f] drop-shadow-[0_0_6px_rgba(0,229,255,0.4)]"
                     : "text-gray-400"
                 }`}
               >
@@ -82,9 +82,9 @@ const NavBar = () => {
             {!loading && user && (
               <Link
                 href={`/dashboard/${user.role}`}
-                className={`text-xs uppercase tracking-wider font-semibold transition-all duration-200 hover:text-[#00E5FF] ${
+                className={`text-xs uppercase tracking-wider font-semibold transition-all duration-200 hover:text-[#ff551f] ${
                   isActive(`/dashboard/${user.role}`)
-                    ? "text-[#00E5FF] drop-shadow-[0_0_6px_rgba(0,229,255,0.4)]"
+                    ? "text-[#ff551f] drop-shadow-[0_0_6px_rgba(0,229,255,0.4)]"
                     : "text-gray-400"
                 }`}
               >
@@ -96,10 +96,10 @@ const NavBar = () => {
           {/* 3. Authentication & User Status Panel (Desktop) */}
           <div className="hidden md:flex items-center gap-4">
             {loading ? (
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#00E5FF] border-t-transparent"></div>
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#ff551f] border-t-transparent"></div>
             ) : user ? (
               <div className="flex items-center gap-3 bg-[#161A23] pl-2 pr-3 py-1 rounded-full border border-gray-800/60">
-                <div className="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-[#00E5FF]/70">
+                <div className="relative h-7 w-7 overflow-hidden rounded-full ring-2 ring-[#ff551f]/70">
                   <Image
                     height={"40"}
                     width={"40"}
@@ -112,7 +112,7 @@ const NavBar = () => {
                   <span className="text-xs font-bold text-gray-200 truncate">
                     {user.name}
                   </span>
-                  <span className="text-[9px] uppercase font-black text-[#00E5FF] tracking-widest">
+                  <span className="text-[9px] uppercase font-black text-[#ff551f] tracking-widest">
                     {user.role}
                   </span>
                 </div>
@@ -128,7 +128,7 @@ const NavBar = () => {
             ) : (
               <Link
                 href="/logIn"
-                className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-bold uppercase tracking-wider rounded-lg group bg-gradient-to-br from-[#00E5FF] to-blue-600 text-white transition-all hover:shadow-[0_0_12px_rgba(0,229,255,0.3)]"
+                className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-bold uppercase tracking-wider rounded-lg group bg-gradient-to-br from-[#ff551f] to-blue-600 text-white transition-all hover:shadow-[0_0_12px_rgba(0,229,255,0.3)]"
               >
                 <span className="relative px-4 py-2 transition-all ease-in duration-75 bg-[#0A0B0E] rounded-md group-hover:bg-opacity-0">
                   Login
@@ -148,7 +148,7 @@ const NavBar = () => {
                 <CircleXmarkFill
                   width={22}
                   height={22}
-                  className="text-[#00E5FF]"
+                  className="text-[#ff551f]"
                 />
               ) : (
                 <Bars width={22} height={22} />
@@ -167,7 +167,7 @@ const NavBar = () => {
               onClick={() => setIsOpen(false)}
               className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold tracking-wide transition-colors ${
                 isActive(link.href)
-                  ? "bg-[#161A23] text-[#00E5FF]"
+                  ? "bg-[#161A23] text-[#ff551f]"
                   : "text-gray-400 hover:bg-[#161A23] hover:text-white"
               }`}
             >
@@ -187,13 +187,13 @@ const NavBar = () => {
               onClick={() => setIsOpen(false)}
               className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold tracking-wide transition-colors ${
                 isActive(`/dashboard/${user.role}`)
-                  ? "bg-[#161A23] text-[#00E5FF]"
+                  ? "bg-[#161A23] text-[#ff551f]"
                   : "text-gray-400 hover:bg-[#161A23] hover:text-white"
               }`}
             >
               <div className="flex items-center gap-2">
                 <span>Dashboard</span>
-                <span className="text-[9px] uppercase font-black px-2 py-0.5 rounded bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20">
+                <span className="text-[9px] uppercase font-black px-2 py-0.5 rounded bg-[#ff551f]/10 text-[#ff551f] border border-[#ff551f]/20">
                   {user.role}
                 </span>
               </div>
@@ -210,7 +210,7 @@ const NavBar = () => {
             {user ? (
               <div className="space-y-3">
                 <div className="flex items-center gap-3 px-3">
-                  <div className="relative h-9 w-9 overflow-hidden rounded-full ring-2 ring-[#00E5FF]">
+                  <div className="relative h-9 w-9 overflow-hidden rounded-full ring-2 ring-[#ff551f]">
                     <Image
                       src={user.image}
                       alt={user.name}
@@ -240,7 +240,7 @@ const NavBar = () => {
               <Link
                 href="/logIn"
                 onClick={() => setIsOpen(false)}
-                className="w-full block text-center rounded-lg bg-gradient-to-r from-[#00E5FF] to-blue-600 px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-cyan-500/10"
+                className="w-full block text-center rounded-lg bg-gradient-to-r from-[#ff551f] to-blue-600 px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-cyan-500/10"
               >
                 Login
               </Link>

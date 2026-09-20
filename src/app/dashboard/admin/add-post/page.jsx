@@ -68,7 +68,7 @@ console.log(session?.user,"[[[[[[[[[[[[[[[[[[[[[[[")
     <div className="w-full max-w-2xl mx-auto p-6 md:p-8 bg-zinc-900 border border-lime-500/20 rounded-2xl shadow-xl shadow-lime-500/5 text-white">
       {/* Header section to capture attention */}
       <div className="mb-8 text-center md:text-left">
-        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-wider text-[#00E5FF]">
+        <h2 className="text-2xl md:text-3xl font-black uppercase tracking-wider text-[#ff551f]">
           Share Your Expertise
         </h2>
         <p className="text-zinc-400 text-sm mt-1">
@@ -83,7 +83,7 @@ console.log(session?.user,"[[[[[[[[[[[[[[[[[[[[[[[")
           <Label className="text-zinc-300 font-semibold mb-2 block text-sm tracking-wide uppercase">
             Post Title
           </Label>
-          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#00E5FF] rounded-xl transition-all duration-200">
+          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#ff551f] rounded-xl transition-all duration-200">
             <InputGroup.Prefix className="pl-3 text-zinc-500">
               <Heading className="w-5 h-5" />
             </InputGroup.Prefix>
@@ -102,9 +102,9 @@ console.log(session?.user,"[[[[[[[[[[[[[[[[[[[[[[[")
             Feature Image
           </Label>
           
-          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#00E5FF] rounded-xl transition-all duration-200 relative">
+          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#ff551f] rounded-xl transition-all duration-200 relative">
             <InputGroup.Prefix className="pl-3 text-zinc-500 flex items-center">
-              {imageLink ? <Check className="w-5 h-5 text-[#00E5FF]" /> : <Picture className="w-5 h-5" />}
+              {imageLink ? <Check className="w-5 h-5 text-[#ff551f]" /> : <Picture className="w-5 h-5" />}
             </InputGroup.Prefix>
             
             {/* Hidden native input overlayed by a stylized placeholder */}
@@ -148,7 +148,7 @@ console.log(session?.user,"[[[[[[[[[[[[[[[[[[[[[[[")
           <Label className="text-zinc-300 font-semibold mb-2 block text-sm tracking-wide uppercase">
             Content / Description
           </Label>
-          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#00E5FF] rounded-xl transition-all duration-200">
+          <InputGroup className="bg-zinc-800 border border-zinc-700 focus-within:border-[#ff551f] rounded-xl transition-all duration-200">
             <InputGroup.Prefix className="pl-3 pt-3 text-zinc-500 items-start">
               <Text className="w-5 h-5" />
             </InputGroup.Prefix>
@@ -174,7 +174,7 @@ console.log(session?.user,"[[[[[[[[[[[[[[[[[[[[[[[")
           <Button 
             type="submit"
             disabled={isUploading}
-            className="w-full sm:w-auto px-8 py-3 bg-[#00E5FF] hover:bg-[#00E5FF] disabled:bg-zinc-700 disabled:text-zinc-500 text-zinc-950 font-black tracking-wide uppercase rounded-xl shadow-lg shadow-lime-400/20 active:scale-[0.98] transition-all duration-200"
+            className="w-full sm:w-auto px-8 py-3 bg-[#ff551f] hover:bg-[#ff551f] disabled:bg-zinc-700 disabled:text-zinc-500 text-zinc-950 font-black tracking-wide uppercase rounded-xl shadow-lg shadow-lime-400/20 active:scale-[0.98] transition-all duration-200"
           >
             {isUploading ? 'Uploading...' : 'Publish Post'}
           </Button>

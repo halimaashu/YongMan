@@ -54,18 +54,18 @@ export function DashboardDrawer({ role }) {
               onClick={() => drawerState.close()}
               className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 relative group ${
                 isActive
-                  ? "bg-primary text-[#00E5FF] font-semibold shadow-lg shadow-primary/20"
+                  ? "bg-primary text-[#ff551f] font-semibold shadow-lg shadow-primary/20"
                   : "text-default-500 hover:bg-content2 hover:text-foreground"
               }`}
             >
               <item.icon
                 className={`size-[18px] shrink-0 transition-transform group-hover:scale-110 ${
-                  isActive ? "text-[#00E5FF]" : "text-primary"
+                  isActive ? "text-[#ff551f]" : "text-primary"
                 }`}
               />
               <span className="truncate">{item.label}</span>
               {isActive && (
-                <span className="absolute right-3 w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
+                <span className="absolute right-3 w-1.5 h-1.5 rounded-full bg-[#ff551f]" />
               )}
             </Link>
           );

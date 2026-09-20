@@ -65,7 +65,7 @@ const Footer = () => {
   return (
     <footer className="w-full bg-[#0A0B0E] border-t border-[#161A23] text-gray-400 text-sm px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Decorative top ambient glow to catch the eye */}
-      <div className="absolute top-0 left-1/4 -translate-y-1/2 w-96 h-12 bg-[#00E5FF] opacity-[0.03] blur-[60px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 -translate-y-1/2 w-96 h-12 bg-[#ff551f] opacity-[0.03] blur-[60px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto pt-16 pb-8">
         
@@ -89,7 +89,7 @@ const Footer = () => {
                 />
               </motion.div>
               <h2 className="text-base font-black tracking-widest text-white uppercase transition-all duration-300 group-hover:tracking-[0.2em]">
-                Young<span className="text-[#00E5FF] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">Man</span>
+                Young<span className="text-[#ff551f] drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">Man</span>
               </h2>
             </Link>
             <p className="text-xs text-gray-500 max-w-sm leading-relaxed tracking-wide">
@@ -99,7 +99,7 @@ const Footer = () => {
 
           {/* Column 2: Quick Links Directory */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#00E5FF]">
+            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#ff551f]">
               Quick Links
             </h4>
             <ul className="space-y-2.5">
@@ -107,7 +107,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-xs text-gray-400 hover:text-[#00E5FF] transition-all duration-200 hover:pl-1 flex items-center"
+                    className="text-xs text-gray-400 hover:text-[#ff551f] transition-all duration-200 hover:pl-1 flex items-center"
                   >
                     {link.name}
                   </Link>
@@ -118,20 +118,20 @@ const Footer = () => {
 
           {/* Column 3: Contact Context */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#00E5FF]">
+            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#ff551f]">
               Contact Info
             </h4>
             <ul className="space-y-3 text-xs text-gray-400 font-medium">
               <li className="flex items-center gap-2.5 group">
-                <MapPin className="text-[#00E5FF] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
+                <MapPin className="text-[#ff551f] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
                 <span className="group-hover:text-gray-300 transition-colors">Dhaka, Bangladesh</span>
               </li>
               <li className="flex items-center gap-2.5 group">
-                <Handset className="text-[#00E5FF] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
+                <Handset className="text-[#ff551f] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
                 <span className="group-hover:text-gray-300 transition-colors">+880 1975665249</span>
               </li>
               <li className="flex items-center gap-2.5 group">
-                <Envelope className="text-[#00E5FF] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
+                <Envelope className="text-[#ff551f] opacity-80 group-hover:scale-110 transition-transform" width={14} height={14} />
                 <span className="truncate group-hover:text-gray-300 transition-colors">halima520ashu@gmail.com.com</span>
               </li>
             </ul>
@@ -139,7 +139,7 @@ const Footer = () => {
 
           {/* Column 4: Enhanced Social Networks Section */}
           <div className="md:col-span-2 space-y-4">
-            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#00E5FF]">
+            <h4 className="text-xs font-black uppercase text-white tracking-widest relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-4 after:h-[2px] after:bg-[#ff551f]">
               Connect With Us
             </h4>
             <div className="flex items-center flex-wrap gap-2.5">
@@ -148,7 +148,7 @@ const Footer = () => {
                   key={social.name}
                   isIconOnly
                   aria-label={social.name}
-                  className="w-9 h-9 rounded-xl min-w-9 bg-[#12161F] text-gray-400 hover:text-[#00E5FF] border border-[#1E2433] hover:border-[#00E5FF]/40 hover:shadow-[0_0_12px_rgba(0,229,255,0.15)] transition-all duration-300"
+                  className="w-9 h-9 rounded-xl min-w-9 bg-[#12161F] text-gray-400 hover:text-[#ff551f] border border-[#1E2433] hover:border-[#ff551f]/40 hover:shadow-[0_0_12px_rgba(0,229,255,0.15)] transition-all duration-300"
                   as={Link}
                   href={social.href}
                   target="_blank"
